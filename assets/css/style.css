@@ -1,3 +1,47 @@
+/* ========================================= */
+/* CUTSCENE DE INTRODUÇÃO PARA CELULAR       */
+/* ========================================= */
+#mobile-intro-cutscene {
+    /* Por padrão, fica escondido em telas grandes */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a; /* Cor de fundo igual ao do seu form */
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    color: #ededed;
+    font-family: 'Inter', sans-serif;
+    opacity: 0; /* Começa invisível para a animação */
+}
+
+/* Regra que ativa a cutscene apenas em celulares */
+@media (max-width: 768px) {
+    #mobile-intro-cutscene {
+        display: flex;
+    }
+}
+
+.intro-text-wrapper {
+    text-align: center;
+}
+
+/* Animações inspiradas no formulário */
+.intro-title {
+    font-size: 4rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.intro-subtitle {
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
+}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -478,72 +522,77 @@ body.is-exiting {
 /* ================================================= */
 /* ESTÉTICA MOBILE RÍGIDA E ORGANIZADA (Celular) */
 /* ================================================= */
+/* ================================================= */
+/* VERSÃO FINAL - ESTÉTICA MOBILE (Celular)          */
+/* ================================================= */
 
 @media (max-width: 768px) {
     /* --- ESTRUTURA GERAL --- */
     .container {
-        /* Garante que o conteúdo não cole nas bordas do celular */
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
-    /* --- TÍTULOS --- */
+    /* --- NAVBAR (NOVO LAYOUT HORIZONTAL) --- */
+    .navbar .container {
+        display: flex;
+        flex-direction: row; /* Força a linha horizontal */
+        justify-content: space-between; /* Logo na esquerda, links na direita */
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar .logo {
+        font-size: 1.5rem; /* Diminui um pouco o logo */
+    }
+    .navbar nav {
+        flex-grow: 1; /* Permite que a navegação ocupe o espaço */
+    }
+    .navbar .nav-links {
+        display: flex;
+        flex-direction: row; /* Links em linha */
+        justify-content: flex-end; /* Alinha os links à direita */
+        gap: 10px; /* Espaço entre os links */
+        width: 100%;
+    }
+    .navbar .nav-links a {
+        font-size: 0.8rem; /* **IMPORTANTE**: Diminui a fonte para caber */
+        padding: 5px;
+    }
+    .navbar .cta-button {
+        display: none; /* Esconde o botão para dar espaço */
+    }
+
+    /* --- TÍTULOS E TEXTOS --- */
     .section-title, .hero-title {
-        font-size: 2.2rem; /* Títulos impactantes, mas sem exageros */
+        font-size: 2.1rem;
         line-height: 1.2;
-        text-align: center; /* Centraliza todos os títulos no mobile */
+        text-align: center;
     }
-
     .section-subtitle, .hero-subtitle {
         font-size: 1rem;
         text-align: center;
-        padding: 0 10px; /* Evita que o texto fique muito largo */
+        padding: 0 5px;
     }
-
-    /* --- NAVBAR (MENU) --- */
-    .navbar .container {
-        flex-direction: column; /* Logo acima, menu abaixo */
-        align-items: center; /* Centraliza tudo */
-        gap: 20px; /* Espaço entre logo e links */
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-
-    .navbar .nav-links {
-        flex-direction: column; /* Links em coluna */
-        align-items: center;
-        gap: 15px;
-        width: 100%; /* Ocupa toda a largura */
-    }
-
-    .navbar .nav-links a {
-        font-size: 1.1rem; /* Aumenta o tamanho da fonte para toque */
-    }
-
-    .navbar .cta-button {
-        display: none; /* Esconde o botão "Ver Planos" para simplificar o menu */
-    }
-
-    /* --- SEÇÃO HERO (INICIAL) --- */
     .hero-section .container {
-        padding-top: 60px;
-        padding-bottom: 60px;
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
 
-    /* --- CARDS (Planos, Serviços, Ecossistema) --- */
+    /* --- CARDS E GRIDS --- */
     .plans-container, .services-grid, .team-grid, .ecosystem-grid {
-        display: flex; /* Garante o comportamento flex */
-        flex-direction: column; /* Força UMA coluna sempre */
-        gap: 25px; /* Um bom espaço entre os cards empilhados */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
-
     .plan-card, .service-card, .team-card {
-        width: 100%; /* Cada card ocupa a largura total */
+        width: 100%;
+        padding: 25px; /* Ajusta padding interno dos cards */
     }
 
     /* --- FOOTER (RODAPÉ) --- */
     .footer-content {
-        flex-direction: column; /* Empilha o texto e o link de contato */
+        flex-direction: column;
         gap: 10px;
         text-align: center;
     }
