@@ -475,54 +475,76 @@ body.is-exiting {
     opacity: 0;
     transition: opacity 0.3s ease-in;
 }
-/* ========================================= */
-/* REGRAS DE RESPONSIVIDADE         */
-/* ========================================= */
+/* ================================================= */
+/* ESTÉTICA MOBILE RÍGIDA E ORGANIZADA (Celular) */
+/* ================================================= */
 
-/* Para tablets e celulares (telas menores que 768px) */
 @media (max-width: 768px) {
-    
-    /* --- Ajustes Gerais --- */
-    .section-title {
-        font-size: 2rem; /* Diminui o tamanho dos títulos principais */
-    }
-
+    /* --- ESTRUTURA GERAL --- */
     .container {
-        padding: 0 15px; /* Adiciona um respiro nas laterais */
+        /* Garante que o conteúdo não cole nas bordas do celular */
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
-    /* --- Correção do Menu de Navegação --- */
+    /* --- TÍTULOS --- */
+    .section-title, .hero-title {
+        font-size: 2.2rem; /* Títulos impactantes, mas sem exageros */
+        line-height: 1.2;
+        text-align: center; /* Centraliza todos os títulos no mobile */
+    }
+
+    .section-subtitle, .hero-subtitle {
+        font-size: 1rem;
+        text-align: center;
+        padding: 0 10px; /* Evita que o texto fique muito largo */
+    }
+
+    /* --- NAVBAR (MENU) --- */
     .navbar .container {
-        flex-direction: column; /* Coloca o logo e os links um sobre o outro */
-        align-items: flex-start; /* Alinha tudo à esquerda */
-        gap: 15px; /* Adiciona um espaço entre o logo e os links */
+        flex-direction: column; /* Logo acima, menu abaixo */
+        align-items: center; /* Centraliza tudo */
+        gap: 20px; /* Espaço entre logo e links */
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     .navbar .nav-links {
-        flex-direction: column; /* Coloca os links do menu em coluna */
-        gap: 10px;
-        width: 100%;
+        flex-direction: column; /* Links em coluna */
+        align-items: center;
+        gap: 15px;
+        width: 100%; /* Ocupa toda a largura */
     }
 
     .navbar .nav-links a {
-        padding: 5px 0; /* Aumenta a área de clique */
+        font-size: 1.1rem; /* Aumenta o tamanho da fonte para toque */
     }
 
     .navbar .cta-button {
-        display: none; /* Esconde o botão "Ver Planos" para economizar espaço */
+        display: none; /* Esconde o botão "Ver Planos" para simplificar o menu */
     }
 
-    /* --- Correção dos Cards (Planos, Serviços, etc.) --- */
-    .plans-container,
-    .services-grid,
-    .team-grid,
-    .ecosystem-grid {
-        flex-direction: column; /* Coloca os cards em uma única coluna */
-        gap: 20px;
+    /* --- SEÇÃO HERO (INICIAL) --- */
+    .hero-section .container {
+        padding-top: 60px;
+        padding-bottom: 60px;
     }
 
-    /* --- Correção do Hero Section --- */
-    .hero-title {
-        font-size: 2.5rem; /* Diminui o título principal da home */
+    /* --- CARDS (Planos, Serviços, Ecossistema) --- */
+    .plans-container, .services-grid, .team-grid, .ecosystem-grid {
+        display: flex; /* Garante o comportamento flex */
+        flex-direction: column; /* Força UMA coluna sempre */
+        gap: 25px; /* Um bom espaço entre os cards empilhados */
+    }
+
+    .plan-card, .service-card, .team-card {
+        width: 100%; /* Cada card ocupa a largura total */
+    }
+
+    /* --- FOOTER (RODAPÉ) --- */
+    .footer-content {
+        flex-direction: column; /* Empilha o texto e o link de contato */
+        gap: 10px;
+        text-align: center;
     }
 }
