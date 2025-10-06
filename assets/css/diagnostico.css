@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #fbfcfd; /* Branco Gelo para o fundo */
+    --text-primary: #1c1f23; /* Texto um pouco menos preto */
+    --text-secondary: #6C757D;
+    --accent-blue: #007BFF;
+    --accent-blue-hover: #0056b3;
+    --border-color: #f0f3f5;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow: hidden; /* Garante que a página não tenha rolagem */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    background-color: rgba(251, 252, 253, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo span {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-blue);
+}
+
+.cta-button {
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-2px);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.gateway-content {
+    text-align: center;
+    max-width: 650px;
+}
+
+.gateway-title {
+    font-size: 3.5rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.gateway-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+}
+
+.gateway-button {
+    display: inline-block;
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+.gateway-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+}
+
+/* --- NOVO SISTEMA DE TRANSIÇÃO DE PÁGINA (CROSS-FADE) --- */
+body.is-entering {
+    opacity: 0;
+}
+body.is-transitioning {
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+body.is-exiting {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+/* ========================================= */
+/* REGRAS DE RESPONSIVIDADE         */
+/* ========================================= */
+
+@media (max-width: 768px) {
+    .gateway-title {
+        font-size: 2.2rem; /* Diminui o título */
+    }
+
+    .gateway-subtitle {
+        font-size: 1rem; /* Diminui o subtítulo */
+    }
+
+    /* Esconde o menu de navegação inteiro para focar na ação principal */
+    .navbar nav, .navbar .cta-button {
+        display: none;
+    }
+
+    .navbar .container {
+        justify-content: center; /* Centraliza o logo */
+    }
+}

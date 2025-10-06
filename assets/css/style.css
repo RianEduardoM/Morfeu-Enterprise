@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #fbfcfd;
+    --bg-card: #ffffff;
+    --border-color: #f0f3f5;
+    --text-primary: #1c1f23;
+    --text-secondary: #6C757D;
+    --accent-blue: #007BFF;
+    --accent-blue-hover: #0056b3;
+    --font-family: 'Inter', sans-serif;
+    --shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    background-color: rgba(251, 252, 253, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo span {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-blue);
+}
+
+.cta-button {
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-2px);
+}
+
+.footer {
+    background-color: var(--bg-main);
+    color: var(--text-secondary);
+    padding: 25px 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 100px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-contact-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.footer-contact-link:hover {
+    color: var(--accent-blue);
+}
+
+main {
+    padding-top: 120px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 50px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: -40px auto 50px auto;
+    line-height: 1.6;
+}
+
+.services-section,
+.ecosystem-section,
+.plans-section {
+    padding: 60px 20px;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero-title {
+    font-size: 3.8rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.work-section {
+    padding: 80px 20px;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.work-card {
+    background-color: var(--bg-card);
+    padding: 20px;
+    text-align: left;
+}
+
+.work-card .card-icon {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 40px;
+    text-align: center;
+    background-color: #EBF4FF;
+    color: var(--accent-blue);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.work-card h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.work-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.teams-section {
+    padding: 80px 20px;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.team-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-blue);
+}
+
+.team-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.team-card h3 {
+    font-size: 2rem;
+    color: var(--text-primary);
+}
+
+.team-card .team-arrow {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-arrow {
+    transform: translateX(5px);
+    color: var(--accent-blue);
+}
+
+.team-card .team-role {
+    font-size: 1rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-blue);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #EBF4FF;
+    color: var(--accent-blue);
+    font-size: 1.8rem;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    align-items: stretch;
+}
+
+.plan-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.plan-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.plan-price {
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    line-height: 1;
+}
+
+.plan-price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.plan-features {
+    text-align: left;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.plan-features li::before {
+    content: '✔';
+    color: var(--accent-blue);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.plan-button {
+    margin-top: auto;
+    display: block;
+    width: 100%;
+    padding: 12px 25px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+}
+
+.plan-button:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.featured-plan {
+    border: 2px solid var(--accent-blue);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 18, 18, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    padding: 30px 40px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-close-btn:hover {
+    color: var(--accent-blue);
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+body.modal-open .modal-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.modal-open .modal {
+    transform: scale(1);
+}
+
+body.is-entering {
+    opacity: 0;
+}
+
+body.is-transitioning {
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+body.is-exiting {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+/* ========================================= */
+/* REGRAS DE RESPONSIVIDADE         */
+/* ========================================= */
+
+/* Para tablets e celulares (telas menores que 768px) */
+@media (max-width: 768px) {
+    
+    /* --- Ajustes Gerais --- */
+    .section-title {
+        font-size: 2rem; /* Diminui o tamanho dos títulos principais */
+    }
+
+    .container {
+        padding: 0 15px; /* Adiciona um respiro nas laterais */
+    }
+
+    /* --- Correção do Menu de Navegação --- */
+    .navbar .container {
+        flex-direction: column; /* Coloca o logo e os links um sobre o outro */
+        align-items: flex-start; /* Alinha tudo à esquerda */
+        gap: 15px; /* Adiciona um espaço entre o logo e os links */
+    }
+
+    .navbar .nav-links {
+        flex-direction: column; /* Coloca os links do menu em coluna */
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navbar .nav-links a {
+        padding: 5px 0; /* Aumenta a área de clique */
+    }
+
+    .navbar .cta-button {
+        display: none; /* Esconde o botão "Ver Planos" para economizar espaço */
+    }
+
+    /* --- Correção dos Cards (Planos, Serviços, etc.) --- */
+    .plans-container,
+    .services-grid,
+    .team-grid,
+    .ecosystem-grid {
+        flex-direction: column; /* Coloca os cards em uma única coluna */
+        gap: 20px;
+    }
+
+    /* --- Correção do Hero Section --- */
+    .hero-title {
+        font-size: 2.5rem; /* Diminui o título principal da home */
+    }
+}

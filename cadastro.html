@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagnóstico - Morfeu</title>
+    <link rel="stylesheet" href="assets/css/cadastro.css" />
+</head>
+<body class="is-entering">
+    <div class="form-container">
+      <div id="form-wrapper">
+        <div class="form-content">
+          <div class="progress-indicator">
+            <div class="step" id="step-0"><div class="step-number">01</div><div class="step-label">Você</div></div>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div class="step" id="step-1"><div class="step-number">02</div><div class="step-label">Ideia</div></div>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div class="step" id="step-2"><div class="step-number">03</div><div class="step-label">Estrutura</div></div>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div class="step" id="step-3"><div class="step-number">04</div><div class="step-label">Projeção</div></div>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div class="step" id="step-4"><div class="step-number">05</div><div class="step-label">Digital</div></div>
+            <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+            <div class="step" id="step-5"><div class="step-number">06</div><div class="step-label">Revisão</div></div>
+          </div>
+          <form class="diagnostic-form" novalidate>
+            <div class="form-steps-container">
+              <fieldset class="form-step active-step">
+                <legend>Etapa 1: Sobre Você</legend>
+                <div class="relative"><input type="text" name="name" placeholder=" " required class="form-input" /><label class="form-label">Nome Completo</label><span class="error-message">Campo obrigatório.</span></div>
+                <div class="relative"><input type="text" name="cpf" placeholder=" " required class="form-input" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" /><label class="form-label">CPF</label><span class="error-message">Formato: 000.000.000-00</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 2: Sobre a Ideia</legend>
+                <div class="relative"><input type="text" name="company-name" placeholder=" " required class="form-input" /><label class="form-label">Nome Fantasia (como será conhecido)</label><span class="error-message">Campo obrigatório.</span></div>
+                <div class="relative"><textarea name="activities" placeholder=" " required class="form-input" rows="3"></textarea><label class="form-label">Descreva suas atividades principais</label><span class="error-message">Essencial para definir seu CNAE.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 3: Sobre a Estrutura</legend>
+                <div class="form-group">
+                  <label class="static-label">O negócio terá sócios?</label>
+                  <div class="radio-group"><label><input type="radio" name="socios" value="nao" required /> Não</label><label><input type="radio" name="socios" value="sim" required /> Sim</label></div>
+                  <span class="error-message">Selecione uma opção.</span>
+                </div>
+                <div class="relative"><input type="number" name="capital" placeholder=" " required class="form-input" min="0" /><label class="form-label">Capital Social Inicial (R$)</label><span class="error-message">Apenas números. Ex: 1000</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 4: Sobre a Projeção</legend>
+                <div class="relative"><input type="number" name="faturamento" placeholder=" " required class="form-input" min="0" /><label class="form-label">Faturamento Mensal Estimado (R$)</label><span class="error-message">Apenas números. Ex: 5000</span></div>
+                <div class="relative"><input type="number" name="funcionarios" placeholder=" " required class="form-input" min="0" value="0" /><label class="form-label">Pretende ter quantos funcionários?</label><span class="error-message">Apenas números.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 5: Presença Digital</legend>
+                <div class="form-group">
+                  <label class="static-label">Além da formalização, precisa de ajuda com:</label>
+                  <div class="checkbox-group"><label><input type="checkbox" name="digital" value="logo" /> Criação de Logo / Identidade Visual</label><label><input type="checkbox" name="digital" value="site" /> Website / Loja Virtual</label><label><input type="checkbox" name="digital" value="social" /> Gestão de Redes Sociais</label></div>
+                </div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 6: Finalização</legend>
+                <div class="form-group">
+                  <label class="static-label">Confirmação de Veracidade</label>
+                  <div class="checkbox-group" data-required="true"><label><input type="checkbox" name="terms" required /> Declaro que as informações fornecidas são verdadeiras.</label></div>
+                  <span class="error-message">Você precisa confirmar para finalizar.</span>
+                </div>
+              </fieldset>
+            </div>
+            <div class="form-navigation">
+              <button type="button" class="btn-secondary" id="prevBtn">Voltar</button>
+              <button type="button" class="btn-primary" id="nextBtn">Avançar</button>
+              <button type="submit" class="btn-primary" id="submitBtn">Enviar Diagnóstico</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="success-animation" class="hidden">
+        <div class="success-content hidden"><h2 class="success-heading">Sua empresa foi encaminhada para formalização!</h2><p class="success-subheading">Nossa equipe entrará em contato em breve.</p></div>
+        <div class="morfeu-reveal hidden"><h1 class="morfeu-title">Morfeu</h1><p class="morfeu-subtitle">Transforme o seu Sonho em uma realidade</p></div>
+      </div>
+    </div>
+    <div class="transition-overlay"></div>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
