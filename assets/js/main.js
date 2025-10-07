@@ -1,15 +1,17 @@
-// VERSÃO FINAL E DEFINITIVA - MORFEU SCRIPT COM LOGS
+// VERSÃO FINAL E DEFINITIVA - LÓGICA ORIGINAL RESTAURADA + FORMULÁRIO CORRIGIDO
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[MORFEU] DOM carregado. Iniciando scripts...');
-    
     try {
         const body = document.body;
 
-        // --- 1. LÓGICA DE TRANSIÇÃO DE PÁGINA ---
-        requestAnimationFrame(() => { body.classList.remove('is-entering'); });
+        // --- 1. LÓGICA DE TRANSIÇÃO DE PÁGINA ORIGINAL RESTAURADA ---
+        requestAnimationFrame(() => {
+            body.classList.remove('is-entering');
+        });
+
         document.querySelectorAll('a:not([href^="#"])').forEach(link => {
             try {
-                const url = new URL(link.href);
+                const url = new URL(link.href, window.location.origin);
                 if (url.hostname === window.location.hostname) {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -42,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 cutscene.style.display = 'none';
             }
         }
-
-        // --- 3. LÓGICA DO MODAL ---
+        
+        // --- 3. LÓGICA DO MODAL (SE EXISTIR NA PÁGINA) ---
         const cards = document.querySelectorAll('.service-card, .team-card');
         const modalBackdrop = document.querySelector('.modal-backdrop');
         if (modalBackdrop && cards.length > 0) {
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
         }
 
-        // --- 4. LÓGICA DO FORMULÁRIO (VERSÃO FINAL COM LOGS E FORMSPREE) ---
+        // --- 4. LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (VERSÃO FINAL COM LOGS E FORMSPREE) ---
         const form = document.getElementById('multiStepForm');
         if (form) {
             console.log('[FORMS] Formulário encontrado. Inicializando...');
