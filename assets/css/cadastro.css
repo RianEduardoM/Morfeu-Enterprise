@@ -43,82 +43,26 @@ body {
   display: flex;
   flex-direction: column;
 }
-.progress-indicator {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-  width: 100%;
-}
-.step {
-  text-align: center;
-  color: var(--text-secondary);
-  transition: color 0.4s;
-  flex-shrink: 0;
-}
-.step.active .step-number {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-}
-.step.active .step-label {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-.step.completed .step-number {
-  background-color: var(--accent-color);
-  color: var(--bg-dark);
-  border-color: var(--accent-color);
-}
-.step-number {
-  width: 36px;
-  height: 36px;
-  border: 2px solid var(--border-color);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 0.5rem auto;
-  font-weight: 600;
-  transition: all 0.4s;
-}
-.step-label {
-  font-size: 0.8rem;
-}
-.progress-bar-container {
-  display: block;
-  flex-grow: 1;
-  height: 2px;
-  background-color: var(--border-color);
-  margin: 1.1rem 0.5rem 0 0.5rem;
-}
-.progress-bar-fill {
-  width: 0%;
-  height: 100%;
-  background-color: var(--accent-color);
-  transition: width 0.4s ease-in-out;
-}
 .form-step {
-  width: 100%;
   display: none;
 }
-.form-step.active,
-.form-step.active-step {
+.form-step.active {
   display: block;
-  animation: fadeIn 0.4s ease-in-out;
+  animation: fadeIn 0.5s ease;
 }
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.relative {
+.form-group {
+  margin-bottom: 1.5rem;
   position: relative;
-  margin-bottom: 2rem;
 }
 .form-input {
   padding: 1.5rem 1rem 0.5rem 1rem;
@@ -127,7 +71,6 @@ body {
   background-color: #222222;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  appearance: none;
   outline: none;
   color: #d1d1d1;
   font-size: 1rem;
@@ -135,15 +78,11 @@ body {
   position: relative;
   z-index: 1;
 }
-.form-input:hover {
-  border-color: #555555;
-}
 .form-label {
   position: absolute;
   top: 1.1rem;
   left: 1rem;
   z-index: 0;
-  transform-origin: 0%;
   color: var(--text-secondary);
   transition: all 0.2s ease-out;
   pointer-events: none;
@@ -155,15 +94,6 @@ body {
   background-color: #2e2e2e;
   padding: 0 0.25rem;
   z-index: 2;
-}
-.form-input:focus ~ .form-label {
-  color: var(--accent-color);
-}
-.form-input:focus {
-  border-color: var(--accent-color);
-}
-.form-group {
-  margin-bottom: 2rem;
 }
 .static-label {
   color: var(--text-secondary);
@@ -185,22 +115,11 @@ body {
   border-radius: 8px;
   padding: 1rem;
   cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
-}
-.radio-group label:hover,
-.checkbox-group label:hover {
-  background-color: #1f1f1f;
-}
-.radio-group input,
-.checkbox-group input {
-  margin-right: 1rem;
-  width: 1.25em;
-  height: 1.25em;
 }
 .form-navigation {
   display: flex;
   justify-content: space-between;
-  margin-top: auto;
+  margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
@@ -213,28 +132,15 @@ button {
   border: none;
   cursor: pointer;
   transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 .btn-primary {
   background-color: var(--accent-color);
   color: var(--bg-dark);
 }
-.btn-primary:hover {
-  opacity: 0.85;
-}
 .btn-secondary {
   background-color: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-}
-.btn-secondary:hover {
-  background-color: #1f1f1f;
-  border-color: var(--text-secondary);
-}
-#submitBtn {
-  display: none;
 }
 .error-message {
   display: none;
@@ -245,65 +151,18 @@ button {
 .has-error .error-message {
   display: block;
 }
-.has-error .form-input,
-.has-error .radio-group label,
-.has-error .checkbox-group label {
-  border-color: var(--error-color) !important;
-}
-.has-error .form-label,
-.has-error .static-label {
-  color: var(--error-color) !important;
-}
 .hidden {
   display: none !important;
 }
 #success-animation {
   text-align: center;
-}
-.success-heading {
-  font-size: 1.75rem;
+  padding: 4rem 0;
 }
 .morfeu-title {
   font-size: 5rem;
-  font-weight: 700;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-dark: #f5f5f5;
-    --bg-card: #ffffff;
-    --border-color: #d4d4d4;
-    --text-primary: #171717;
-    --text-secondary: #737373;
-    --accent-color: #0a0a0a;
-  }
-  #form-wrapper {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-  }
-  .form-input {
-    background-color: #ffffff;
-    border-color: #dcdcdc;
-    color: #333333;
-  }
-  .form-input:hover {
-    border-color: #b0b0b0;
-  }
-  .form-input:focus ~ .form-label {
-    background-color: #fafafa;
-  }
-  .step.completed .step-number {
-    color: var(--text-primary);
-  }
-  .radio-group label:hover,
-  .checkbox-group label:hover {
-    background-color: #f0f0f0;
-  }
-  .btn-secondary:hover {
-    background-color: #eaeaea;
-  }
-}
-/* ======================================================= */
-/* ====== SOLUÇÃO FINAL E DEFINITIVA PARA CELULARES ====== */
-/* ======================================================= */
+
+/* REGRAS PARA CELULAR */
 @media (max-width: 768px) {
   body {
     padding: 15px 10px;
@@ -322,9 +181,6 @@ button {
   .form-content {
     padding: 20px 10px;
   }
-  .progress-indicator {
-    display: none;
-  }
   .form-label {
     position: static;
     transform: none !important;
@@ -332,11 +188,9 @@ button {
     padding: 0 !important;
     margin-bottom: 12px;
     display: block;
-    pointer-events: auto;
     font-size: 1.1rem;
     font-weight: 500;
     color: var(--text-primary);
-    z-index: auto;
   }
   .form-input {
     padding: 14px;
@@ -345,8 +199,6 @@ button {
   .form-input:focus ~ .form-label,
   .form-input:not(:placeholder-shown) ~ .form-label {
     transform: none;
-    background: none;
-    padding: 0;
   }
   .form-navigation {
     flex-direction: column-reverse;
