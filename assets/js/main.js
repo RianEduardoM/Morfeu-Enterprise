@@ -1,210 +1,83 @@
-// VERSÃO FINAL E DEFINITIVA - LÓGICA ORIGINAL RESTAURADA + FORMULÁRIO CORRIGIDO
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('[MORFEU] DOM carregado. Iniciando scripts...');
-    try {
-        const body = document.body;
-
-        // --- 1. LÓGICA DE TRANSIÇÃO DE PÁGINA ORIGINAL RESTAURADA ---
-        requestAnimationFrame(() => {
-            body.classList.remove('is-entering');
-        });
-
-        document.querySelectorAll('a:not([href^="#"])').forEach(link => {
-            try {
-                const url = new URL(link.href, window.location.origin);
-                if (url.hostname === window.location.hostname) {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const destination = link.href;
-                        console.log(`[MORFEU] Navegando para: ${destination}`);
-                        body.classList.add('is-entering');
-                        setTimeout(() => { window.location.href = destination; }, 500);
-                    });
-                }
-            } catch (e) { /* Ignora links inválidos */ }
-        });
-
-        // --- 2. LÓGICA DA CUTSCENE MOBILE ---
-        const cutscene = document.getElementById('mobile-intro-cutscene');
-        if (cutscene) {
-            if (window.innerWidth <= 768 && !sessionStorage.getItem('morfeuIntroPlayed')) {
-                console.log('[MORFEU] Cutscene: Iniciando animação mobile.');
-                const title = cutscene.querySelector('.intro-title');
-                const subtitle = cutscene.querySelector('.intro-subtitle');
-                cutscene.style.display = 'flex';
-                setTimeout(() => { cutscene.style.opacity = '1'; }, 10);
-                setTimeout(() => { title.style.opacity = '1'; title.style.transform = 'translateY(0)'; }, 500);
-                setTimeout(() => { subtitle.style.opacity = '1'; subtitle.style.transform = 'translateY(0)'; }, 1500);
-                setTimeout(() => {
-                    cutscene.style.opacity = '0';
-                    setTimeout(() => cutscene.style.display = 'none', 500);
-                }, 5500);
-                sessionStorage.setItem('morfeuIntroPlayed', 'true');
-            } else {
-                cutscene.style.display = 'none';
-            }
-        }
-        
-        // --- 3. LÓGICA DO MODAL (SE EXISTIR NA PÁGINA) ---
-        const cards = document.querySelectorAll('.service-card, .team-card');
-        const modalBackdrop = document.querySelector('.modal-backdrop');
-        if (modalBackdrop && cards.length > 0) {
-            const modal = modalBackdrop.querySelector('.modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalDescription = document.getElementById('modal-description');
-            const closeModalBtn = modal.querySelector('.modal-close-btn');
-            cards.forEach(card => card.addEventListener('click', () => {
-                modalTitle.textContent = card.dataset.title;
-                modalDescription.textContent = card.dataset.description;
-                modalBackdrop.style.opacity = '1';
-                modalBackdrop.style.pointerEvents = 'auto';
-            }));
-            const closeModal = () => {
-                modalBackdrop.style.opacity = '0';
-                modalBackdrop.style.pointerEvents = 'none';
-            };
-            closeModalBtn.addEventListener('click', closeModal);
-            modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
-        }
-
-        // --- 4. LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (VERSÃO FINAL COM LOGS E FORMSPREE) ---
-        const form = document.getElementById('multiStepForm');
-        if (form) {
-            console.log('[FORMS] Formulário encontrado. Inicializando...');
-            let currentStepIndex = 0;
-            const steps = Array.from(form.querySelectorAll('.form-step'));
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
-
-            const showStep = (index) => {
-                console.log(`[FORMS] Mostrando etapa ${index + 1}`);
-                steps.forEach((step, i) => {
-                    step.classList.toggle('active', i === index);
-                });
-                updateButtons();
-            };
-
-            const updateButtons = () => {
-                prevBtn.style.display = currentStepIndex > 0 ? 'inline-flex' : 'none';
-                nextBtn.style.display = currentStepIndex < steps.length - 1 ? 'inline-flex' : 'none';
-                submitBtn.style.display = currentStepIndex === steps.length - 1 ? 'inline-flex' : 'none';
-                console.log(`[FORMS] Botões atualizados para a etapa ${currentStepIndex + 1}.`);
-            };
-
-            const validateCurrentStep = () => {
-                const currentStepElement = steps[currentStepIndex];
-                console.log(`[FORMS] Validando etapa ${currentStepIndex + 1}...`);
-                const requiredElements = currentStepElement.querySelectorAll('[data-required="true"], input[required]');
-                let isStepValid = true;
-
-                requiredElements.forEach(el => {
-                    const group = el.closest('.form-group');
-                    let isValid = false;
-                    let inputToCheck = el;
-                    if (el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' && el.tagName !== 'SELECT') {
-                        inputToCheck = el.querySelector('input');
-                    }
-                    
-                    if (inputToCheck.type === 'radio') {
-                        const radioName = inputToCheck.name;
-                        if (currentStepElement.querySelector(`input[name="${radioName}"]:checked`)) {
-                            isValid = true;
-                        }
-                    } else if (inputToCheck.type === 'checkbox') {
-                        isValid = inputToCheck.checked;
-                    } else {
-                        if (inputToCheck.value.trim() !== '') {
-                            isValid = true;
-                        }
-                    }
-
-                    if (!isValid) {
-                        isStepValid = false;
-                        group.classList.add('has-error');
-                        console.warn(`[FORMS] Validação FALHOU para o campo:`, inputToCheck.name);
-                    } else {
-                        group.classList.remove('has-error');
-                    }
-                });
-                console.log(`[FORMS] Validação da etapa ${currentStepIndex + 1} concluída: ${isStepValid ? 'Válido' : 'Inválido'}`);
-                return isStepValid;
-            };
-
-            nextBtn.addEventListener('click', () => {
-                console.log('[FORMS] Botão "Avançar" clicado.');
-                if (validateCurrentStep()) {
-                    if (currentStepIndex < steps.length - 1) {
-                        currentStepIndex++;
-                        showStep(currentStepIndex);
-                    }
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                console.log('[FORMS] Botão "Voltar" clicado.');
-                if (currentStepIndex > 0) {
-                    currentStepIndex--;
-                    showStep(currentStepIndex);
-                }
-            });
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                console.log('[FORMS] Botão "Enviar" clicado.');
-                if (!validateCurrentStep()) return;
-
-                console.log('[FORMS] Formulário válido. Enviando para o Formspree...');
-                const formData = new FormData(form);
-                const action = form.getAttribute('action');
-                submitBtn.textContent = 'Enviando...';
-                submitBtn.disabled = true;
-
-                fetch(action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('[FORMS] Envio para o Formspree bem-sucedido. Disparando animação de sucesso...');
-                        const formWrapper = document.getElementById('form-wrapper');
-                        const successAnimation = document.getElementById('success-animation');
-                        formWrapper.style.opacity = '0';
-                        setTimeout(() => {
-                            formWrapper.classList.add('hidden');
-                            successAnimation.classList.remove('hidden');
-                            const successContent = successAnimation.querySelector('.success-content');
-                            const morfeuReveal = successAnimation.querySelector('.morfeu-reveal');
-                            successContent.classList.remove('hidden');
-                            setTimeout(() => {
-                                successContent.style.opacity = '0';
-                                setTimeout(() => {
-                                    successContent.classList.add('hidden');
-                                    morfeuReveal.classList.remove('hidden');
-                                }, 500);
-                            }, 3000);
-                            setTimeout(() => {
-                               body.classList.add('is-entering');
-                               setTimeout(() => window.location.href = 'index.html', 500);
-                            }, 7000);
-                        }, 500);
-                    } else {
-                        throw new Error('Resposta da rede não foi OK.');
-                    }
-                })
-                .catch(error => {
-                    console.error('[FORMS] ERRO no envio para o Formspree:', error);
-                    alert('Não foi possível enviar seu diagnóstico. Por favor, tente novamente mais tarde.');
-                    submitBtn.textContent = 'Enviar Diagnóstico';
-                    submitBtn.disabled = false;
-                });
-            });
-            
-            showStep(0);
-        }
-
-    } catch (error) {
-        console.error("MORFEU ERRO CRÍTICO GLOBAL:", error);
-    }
-});
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagnóstico - Morfeu</title>
+    <link rel="stylesheet" href="assets/css/cadastro.css" />
+</head>
+<body class="is-entering">
+    <div id="mobile-intro-cutscene">
+        <div class="intro-text-wrapper">
+            <h1 class="intro-title">Morfeu</h1>
+            <p class="intro-subtitle">Versão para Celular</p>
+        </div>
+    </div>
+    <div class="form-container">
+      <div id="form-wrapper">
+        <div class="form-content">
+          <div class="progress-indicator">
+            <div class="step"><div class="step-number">01</div><div class="step-label">Você</div></div><div class="progress-bar-container"></div>
+            <div class="step"><div class="step-number">02</div><div class="step-label">Ideia</div></div><div class="progress-bar-container"></div>
+            <div class="step"><div class="step-number">03</div><div class="step-label">Estrutura</div></div><div class="progress-bar-container"></div>
+            <div class="step"><div class="step-number">04</div><div class="step-label">Projeção</div></div><div class="progress-bar-container"></div>
+            <div class="step"><div class="step-number">05</div><div class="step-label">Digital</div></div><div class="progress-bar-container"></div>
+            <div class="step"><div class="step-number">06</div><div class="step-label">Finalizar</div></div>
+          </div>
+          <form id="multiStepForm" action="https://formspree.io/f/mjkaewlb" method="POST">
+              <fieldset class="form-step">
+                <legend>Etapa 1: Sobre Você</legend>
+                <div class="form-group"><input type="text" id="fullName" name="Nome Completo" class="form-input" placeholder=" " data-required="true" /><label for="fullName" class="form-label">Nome Completo</label><span class="error-message">Campo obrigatório.</span></div>
+                <div class="form-group"><input type="text" id="cpf" name="CPF" class="form-input" placeholder=" " data-required="true" /><label for="cpf" class="form-label">CPF</label><span class="error-message">Campo obrigatório.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 2: Sobre a Ideia</legend>
+                <div class="form-group"><input type="text" id="companyName" name="Nome Fantasia" class="form-input" placeholder=" " data-required="true" /><label for="companyName" class="form-label">Nome Fantasia da Empresa</label><span class="error-message">Campo obrigatório.</span></div>
+                <div class="form-group"><textarea id="companyActivity" name="Atividade Principal" rows="4" class="form-input" placeholder=" " data-required="true"></textarea><label for="companyActivity" class="form-label">Atividade Principal</label><span class="error-message">Campo obrigatório.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 3: Sobre a Estrutura</legend>
+                <div class="form-group">
+                  <label class="static-label">Terá Sócios?</label>
+                  <div class="radio-group" data-required="true"><label><input type="radio" name="Terá Sócios" value="sim" /> Sim</label><label><input type="radio" name="Terá Sócios" value="nao" /> Não</label></div>
+                  <span class="error-message">Selecione uma opção.</span>
+                </div>
+                <div class="form-group"><input type="number" id="initialCapital" name="Capital Social" class="form-input" placeholder=" " data-required="true" /><label for="initialCapital" class="form-label">Capital Social Inicial (R$)</label><span class="error-message">Informe um valor.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 4: Sobre a Projeção</legend>
+                <div class="form-group"><input type="number" id="monthlyRevenue" name="Faturamento Mensal" class="form-input" placeholder=" " data-required="true" /><label for="monthlyRevenue" class="form-label">Faturamento Mensal (Estimativa)</label><span class="error-message">Informe um valor.</span></div>
+                <div class="form-group"><input type="number" id="employeeCount" name="Número de Funcionários" class="form-input" placeholder=" " data-required="true" /><label for="employeeCount" class="form-label">Número de Funcionários (Pretensão)</label><span class="error-message">Informe um número.</span></div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 5: Presença Digital</legend>
+                <div class="form-group">
+                  <label class="static-label">Precisa de ajuda com:</label>
+                  <div class="checkbox-group"><label><input type="checkbox" name="Ajuda com Logo" value="sim" /> Criação de Logo</label><label><input type="checkbox" name="Ajuda com Website" value="sim" /> Website/Landing Page</label><label><input type="checkbox" name="Ajuda com Redes Sociais" value="sim" /> Gestão de Redes Sociais</label></div>
+                </div>
+              </fieldset>
+              <fieldset class="form-step">
+                <legend>Etapa 6: Finalização</legend>
+                <div class="form-group">
+                  <label class="static-label">Confirmação de Veracidade</label>
+                  <div class="checkbox-group" data-required="true"><label><input type="checkbox" name="Termos" value="aceito" required /> Declaro que as informações fornecidas são verdadeiras.</label></div>
+                  <span class="error-message">Você precisa confirmar para finalizar.</span>
+                </div>
+              </fieldset>
+            <div class="form-navigation">
+              <button type="button" class="btn-secondary" id="prevBtn">Voltar</button>
+              <button type="button" class="btn-primary" id="nextBtn">Avançar</button>
+              <button type="submit" class="btn-primary" id="submitBtn">Enviar Diagnóstico</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="success-animation" class="hidden">
+        <div class="success-content hidden"><h2 class="success-heading">Sua empresa foi encaminhada para formalização!</h2><p class="success-subheading">Nossa equipe entrará em contato em breve.</p></div>
+        <div class="morfeu-reveal hidden"><h1 class="morfeu-title">Morfeu</h1><p class="morfeu-subtitle">Transforme o seu Sonho em uma realidade</p></div>
+      </div>
+    </div>
+    <div class="transition-overlay"></div>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -98,9 +98,11 @@ body {
   transition: width 0.4s ease-in-out;
 }
 .form-step {
+  width: 100%;
   display: none;
 }
-.form-step.active {
+.form-step.active,
+.form-step.active-step {
   display: block;
   animation: fadeIn 0.4s ease-in-out;
 }
