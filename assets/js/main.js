@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         }, 500);
                     });
                 }
-            } catch (e) { /* Ignora links inválidos como mailto: */ }
+            } catch (e) { /* Ignora links inválidos */ }
         });
-        
-        // --- 2. LÓGICA DA CUTSCENE DE INTRODUÇÃO MOBILE ---
+
+        // --- 2. LÓGICA DA CUTSCENE MOBILE ---
         const cutscene = document.getElementById('mobile-intro-cutscene');
         if (cutscene && window.innerWidth <= 768 && !sessionStorage.getItem('morfeuIntroPlayed')) {
             const title = cutscene.querySelector('.intro-title');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cutscene.style.display = 'none';
         }
 
-        // --- 3. LÓGICA DO MODAL DE SERVIÇOS/EQUIPES ---
+        // --- 3. LÓGICA DO MODAL ---
         const cards = document.querySelectorAll('.service-card, .team-card');
         const modalBackdrop = document.querySelector('.modal-backdrop');
         if (modalBackdrop) {
@@ -92,119 +92,99 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // --- 4. LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (CORREÇÃO CRÍTICA APLICADA AQUI) ---
-        const multiStepForm = document.getElementById('multiStepForm');
-        if (multiStepForm) {
-            let currentStep = 0;
-            const formSteps = Array.from(multiStepForm.querySelectorAll('.form-step'));
+        // --- 4. LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (VERSÃO FINAL E CORRIGIDA) ---
+        const form = document.getElementById('multiStepForm');
+        if (form) {
+            let currentStepIndex = 0;
+            const steps = Array.from(form.querySelectorAll('.form-step'));
             const progressSteps = Array.from(document.querySelectorAll('.progress-indicator .step'));
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const submitBtn = document.getElementById('submitBtn');
 
-            const showStep = (stepIndex) => {
-                formSteps.forEach((step, index) => {
-                    step.classList.toggle('active', index === stepIndex);
+            const showStep = (index) => {
+                steps.forEach((step, i) => {
+                    step.classList.toggle('active', i === index);
+                    // Compatibilidade com o seu CSS original que usa 'active-step'
+                    step.classList.toggle('active-step', i === index); 
                 });
-                progressSteps.forEach((step, index) => {
-                    step.classList.toggle('active', index === stepIndex);
-                    step.classList.toggle('completed', index < stepIndex);
+                progressSteps.forEach((step, i) => {
+                    step.classList.toggle('active', i === index);
+                    step.classList.toggle('completed', i < index);
                 });
-                updateUI();
+                updateButtons();
             };
 
-            const validateStep = (stepIndex) => {
-                const currentStepFields = formSteps[stepIndex].querySelectorAll('[data-required="true"]');
-                let isValid = true;
-                currentStepFields.forEach(field => {
-                    const group = field.closest('.form-group');
-                    const errorMsg = group.querySelector('.error-message');
-                    let fieldIsValid = false;
+            const updateButtons = () => {
+                prevBtn.style.display = currentStepIndex > 0 ? 'inline-flex' : 'none';
+                nextBtn.style.display = currentStepIndex < steps.length - 1 ? 'inline-flex' : 'none';
+                submitBtn.style.display = currentStepIndex === steps.length - 1 ? 'inline-flex' : 'none';
+            };
 
+            const validateCurrentStep = () => {
+                const currentStepElement = steps[currentStepIndex];
+                const requiredFields = currentStepElement.querySelectorAll('[data-required="true"], input[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    const group = field.closest('.form-group, .relative');
+                    let fieldIsValid = false;
+                    
                     if (field.type === 'radio') {
-                        const radioGroup = group.querySelectorAll('input[name="' + field.name + '"]');
-                        if (Array.from(radioGroup).some(r => r.checked)) {
-                           fieldIsValid = true;
+                        const radioName = field.name;
+                        if (currentStepElement.querySelector(`input[name="${radioName}"]:checked`)) {
+                            fieldIsValid = true;
                         }
                     } else if (field.type === 'checkbox') {
-                         if (field.checked) {
-                            fieldIsValid = true;
-                         }
+                        fieldIsValid = field.checked;
                     } else if (field.value.trim() !== '') {
                         fieldIsValid = true;
                     }
 
                     if (!fieldIsValid) {
                         isValid = false;
-                        errorMsg.style.display = 'block';
+                        group.classList.add('has-error');
                     } else {
-                        errorMsg.style.display = 'none';
+                        group.classList.remove('has-error');
                     }
                 });
                 return isValid;
             };
 
-            const updateUI = () => {
-                prevBtn.style.display = currentStep > 0 ? 'inline-flex' : 'none';
-                nextBtn.style.display = currentStep < formSteps.length - 1 ? 'inline-flex' : 'none';
-                submitBtn.style.display = currentStep === formSteps.length - 1 ? 'inline-flex' : 'none';
-            };
-            
             nextBtn.addEventListener('click', () => {
-                if (validateStep(currentStep) && currentStep < formSteps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
+                if (validateCurrentStep()) {
+                    if (currentStepIndex < steps.length - 1) {
+                        currentStepIndex++;
+                        showStep(currentStepIndex);
+                    }
                 }
             });
 
             prevBtn.addEventListener('click', () => {
-                if (currentStep > 0) {
-                    currentStep--;
-                    showStep(currentStep);
+                if (currentStepIndex > 0) {
+                    currentStepIndex--;
+                    showStep(currentStepIndex);
                 }
             });
 
-            multiStepForm.addEventListener('submit', (e) => {
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                if (validateStep(currentStep)) {
-                    // Lógica de animação de sucesso
+                if (validateCurrentStep()) {
                     const formWrapper = document.getElementById('form-wrapper');
                     const successAnimation = document.getElementById('success-animation');
-                    const successMessage = successAnimation.querySelector('.success-content');
-                    const morfeuReveal = successAnimation.querySelector('.morfeu-reveal');
-                    
-                    formWrapper.style.transition = 'opacity 0.5s ease-out';
                     formWrapper.style.opacity = '0';
-
                     setTimeout(() => {
                         formWrapper.classList.add('hidden');
                         successAnimation.classList.remove('hidden');
-                        successMessage.classList.remove('hidden');
-                        morfeuReveal.classList.add('hidden');
-
                         setTimeout(() => {
-                            successMessage.style.transition = 'opacity 0.5s ease-out';
-                            successMessage.style.opacity = '0';
-                            
-                            setTimeout(() => {
-                                successMessage.classList.add('hidden');
-                                morfeuReveal.classList.remove('hidden');
-
-                                setTimeout(() => {
-                                    // Dispara a animação de saída para a página inicial
-                                    body.classList.add('is-entering');
-                                    setTimeout(() => {
-                                        window.location.href = 'index.html';
-                                    }, 500);
-                                }, 4000);
-                            }, 500);
-                        }, 3000);
+                           body.classList.add('is-entering');
+                           setTimeout(() => window.location.href = 'index.html', 500);
+                        }, 5000);
                     }, 500);
                 }
             });
             
-            // Inicia o formulário na primeira etapa
-            showStep(currentStep);
+            showStep(0);
         }
     } catch (error) {
         console.error("MORFEU ERRO CRÍTICO:", error);

@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  /* TEMA ESCURO (PADRÃO) */
   --bg-dark: #0a0a0a;
   --bg-card: #141414;
   --border-color: #2f2f2f;
@@ -11,13 +10,11 @@
   --font-family: "Inter", sans-serif;
   --error-color: #ff5a5a;
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: var(--font-family);
   background-color: var(--bg-dark);
@@ -28,12 +25,10 @@ body {
   min-height: 100vh;
   padding: 2rem;
 }
-
 .form-container {
   width: 100%;
   max-width: 700px;
 }
-
 #form-wrapper {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -42,14 +37,12 @@ body {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   transition: opacity 0.5s ease;
 }
-
 .form-content {
   transform: rotate(1.5deg);
   padding: 2.5rem 3.5rem;
   display: flex;
   flex-direction: column;
 }
-
 .progress-indicator {
   display: flex;
   justify-content: space-between;
@@ -57,30 +50,25 @@ body {
   margin-bottom: 3rem;
   width: 100%;
 }
-
 .step {
   text-align: center;
   color: var(--text-secondary);
   transition: color 0.4s;
   flex-shrink: 0;
 }
-
 .step.active .step-number {
   border-color: var(--accent-color);
   color: var(--accent-color);
 }
-
 .step.active .step-label {
   color: var(--text-primary);
   font-weight: 500;
 }
-
 .step.completed .step-number {
   background-color: var(--accent-color);
   color: var(--bg-dark);
   border-color: var(--accent-color);
 }
-
 .step-number {
   width: 36px;
   height: 36px;
@@ -93,11 +81,9 @@ body {
   font-weight: 600;
   transition: all 0.4s;
 }
-
 .step-label {
   font-size: 0.8rem;
 }
-
 .progress-bar-container {
   display: block;
   flex-grow: 1;
@@ -105,26 +91,12 @@ body {
   background-color: var(--border-color);
   margin: 1.1rem 0.5rem 0 0.5rem;
 }
-
 .progress-bar-fill {
   width: 0%;
   height: 100%;
   background-color: var(--accent-color);
   transition: width 0.4s ease-in-out;
 }
-
-.diagnostic-form {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.form-steps-container {
-  position: relative;
-  min-height: 300px;
-  flex-grow: 1;
-}
-
 .form-step {
   width: 100%;
   position: absolute;
@@ -134,24 +106,23 @@ body {
   pointer-events: none;
   transform: translateX(30px);
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  display: none;
 }
-
+.form-step.active,
 .form-step.active-step {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(0);
+  display: block;
 }
-
 .form-step.exiting {
   opacity: 0;
   transform: translateX(-30px);
 }
-
 .relative {
   position: relative;
   margin-bottom: 2rem;
 }
-
 .form-input {
   padding: 1.5rem 1rem 0.5rem 1rem;
   display: block;
@@ -167,11 +138,9 @@ body {
   position: relative;
   z-index: 1;
 }
-
 .form-input:hover {
   border-color: #555555;
 }
-
 .form-label {
   position: absolute;
   top: 1.1rem;
@@ -182,7 +151,6 @@ body {
   transition: all 0.2s ease-out;
   pointer-events: none;
 }
-
 .form-input:focus ~ .form-label,
 .form-input:not(:placeholder-shown) ~ .form-label {
   transform: scale(0.8) translateY(-0.75rem);
@@ -191,15 +159,12 @@ body {
   padding: 0 0.25rem;
   z-index: 2;
 }
-
 .form-input:focus ~ .form-label {
   color: var(--accent-color);
 }
-
 .form-input:focus {
   border-color: var(--accent-color);
 }
-
 select.form-input {
   color-scheme: dark;
   -webkit-appearance: none;
@@ -211,30 +176,25 @@ select.form-input {
   background-size: 1.2em;
   padding-right: 2.5rem;
 }
-
 select.form-input option {
   background-color: var(--bg-dark);
   color: var(--text-primary);
 }
-
 .form-group {
   margin-bottom: 2rem;
 }
-
 .static-label {
   color: var(--text-secondary);
   margin-bottom: 1rem;
   display: block;
   font-weight: 500;
 }
-
 .radio-group,
 .checkbox-group {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
-
 .radio-group label,
 .checkbox-group label {
   display: flex;
@@ -245,19 +205,16 @@ select.form-input option {
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
 }
-
 .radio-group label:hover,
 .checkbox-group label:hover {
   background-color: #1f1f1f;
 }
-
 .radio-group input,
 .checkbox-group input {
   margin-right: 1rem;
   width: 1.25em;
   height: 1.25em;
 }
-
 .form-navigation {
   display: flex;
   justify-content: space-between;
@@ -265,7 +222,6 @@ select.form-input option {
   padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
-
 button {
   font-family: var(--font-family);
   font-size: 1rem;
@@ -279,66 +235,53 @@ button {
   align-items: center;
   justify-content: center;
 }
-
 .btn-primary {
   background-color: var(--accent-color);
   color: var(--bg-dark);
 }
-
 .btn-primary:hover {
   opacity: 0.85;
 }
-
 .btn-secondary {
   background-color: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
-
 .btn-secondary:hover {
   background-color: #1f1f1f;
   border-color: var(--text-secondary);
 }
-
 #submitBtn {
   display: none;
 }
-
 .error-message {
   display: none;
   color: var(--error-color);
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
-
 .has-error .error-message {
   display: block;
 }
-
 .has-error .form-input,
 .has-error .radio-group label,
 .has-error .checkbox-group label {
   border-color: var(--error-color) !important;
 }
-
 .has-error .form-label,
 .has-error .static-label {
   color: var(--error-color) !important;
 }
-
 .hidden {
   display: none !important;
 }
-
 #success-animation {
   text-align: center;
 }
-
 .success-content,
 .morfeu-reveal {
   animation: fadeIn 1s ease-in-out;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -349,30 +292,25 @@ button {
     transform: translateY(0);
   }
 }
-
 .success-heading {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
   color: var(--text-primary);
 }
-
 .success-subheading {
   color: var(--text-secondary);
   font-size: 1.1rem;
   margin-bottom: 3rem;
 }
-
 .morfeu-title {
   font-size: 5rem;
   font-weight: 700;
   color: var(--text-primary);
 }
-
 .morfeu-subtitle {
   font-size: 1.5rem;
   color: var(--text-secondary);
 }
-
 @media (prefers-color-scheme: light) {
   :root {
     --bg-dark: #f5f5f5;
@@ -411,88 +349,82 @@ button {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   }
 }
-
 /* ======================================================= */
-/* ====== SOLUÇÃO FINAL, COMPLETA E CORRETA PARA CELULARES */
+/* ====== SOLUÇÃO FINAL E DEFINITIVA PARA CELULARES ====== */
 /* ======================================================= */
 @media (max-width: 768px) {
   body {
     padding: 15px 10px;
     align-items: flex-start;
   }
-
-  /* Remove os efeitos visuais do container */
-  #form-wrapper {
+  #form-wrapper,
+  .form-content {
     transform: none;
+  }
+  #form-wrapper {
     padding: 0;
     border: none;
     background: none;
     box-shadow: none;
   }
   .form-content {
-    transform: none;
     padding: 20px 10px;
   }
-
-  /* Simplifica o layout */
-  .progress-indicator { display: none; }
-  .form-steps-container { min-height: auto; }
-
-  /* Garante que os passos sejam exibidos corretamente */
+  .progress-indicator {
+    display: none;
+  }
+  .form-steps-container {
+    min-height: auto;
+  }
   .form-step {
     position: relative;
     display: none;
-    opacity: 1; 
-    transform: none; 
+    opacity: 1;
+    transform: none;
     transition: none;
   }
+  .form-step.active,
   .form-step.active-step {
     display: block;
   }
 
-  /* A CORREÇÃO DEFINITIVA: 
-    Desativa o label flutuante e o transforma em um título normal.
-  */
+  /* A CORREÇÃO QUE REALMENTE FUNCIONA: Desativa o label flutuante */
   .form-label {
-    position: static; /* Força o label a deixar de ser flutuante */
-    transform: none !important; /* Remove qualquer animação de movimento */
+    position: static; /* Impede o label de flutuar */
+    transform: none !important; /* Remove qualquer animação */
     background: none !important;
     padding: 0 !important;
-    margin-bottom: 12px; /* Adiciona um espaço abaixo da pergunta */
+    margin-bottom: 12px; /* Espaço entre a pergunta e a caixa de resposta */
     display: block;
     pointer-events: auto;
-    font-size: 1.1rem; /* Deixa a pergunta legível */
+    font-size: 1.1rem;
     font-weight: 500;
     color: var(--text-primary);
     z-index: auto;
   }
-
-  /* Ajusta o campo de resposta */
   .form-input {
-    padding: 14px; /* Padding normal, sem espaço extra para o label */
-    font-size: 16px; /* Evita o zoom automático do iOS */
+    padding: 14px;
+    font-size: 16px;
   }
-
-  /* Remove as regras de animação para o estado de foco/preenchido */
   .form-input:focus ~ .form-label,
   .form-input:not(:placeholder-shown) ~ .form-label {
     transform: none;
     background: none;
     padding: 0;
   }
-  
-  /* Ajusta o layout dos botões de navegação */
+
   .form-navigation {
     flex-direction: column-reverse;
     gap: 12px;
   }
-  
   .form-navigation button {
     width: 100%;
     padding: 15px;
   }
-
-  /* Ajustes finais de tamanho */
-  .morfeu-title { font-size: 3rem; }
-  .morfeu-subtitle { font-size: 1.1rem; }
+  .morfeu-title {
+    font-size: 3rem;
+  }
+  .morfeu-subtitle {
+    font-size: 1.1rem;
+  }
 }
