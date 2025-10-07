@@ -1,4 +1,5 @@
 
+console.log("Arquivo main.js carregado com sucesso!");
 // --- 2. LÓGICA DA CUTSCENE DE INTRODUÇÃO MOBILE ---
 try {
     const cutscene = document.getElementById('mobile-intro-cutscene');
