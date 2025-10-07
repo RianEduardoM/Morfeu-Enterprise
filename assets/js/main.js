@@ -1,4 +1,4 @@
-// VERSÃO FINAL E REVISADA - MORFEU SCRIPT
+// VERSÃO FINAL, REVISADA E CORRIGIDA COM BASE NOS LOGS
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[MORFEU] DOM carregado. Iniciando scripts...');
     
@@ -6,14 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = document.body;
 
         // --- 1. LÓGICA DE TRANSIÇÃO DE PÁGINA ---
-        requestAnimationFrame(() => {
-            body.classList.remove('is-entering');
-        });
-
-        document.querySelectorAll('a').forEach(link => {
+        requestAnimationFrame(() => { body.classList.remove('is-entering'); });
+        document.querySelectorAll('a:not([href^="#"])').forEach(link => {
             try {
-                const url = new URL(link.href, window.location.origin);
-                if (url.hostname === window.location.hostname && !url.hash && url.href !== window.location.href && !link.href.endsWith('#')) {
+                const url = new URL(link.href);
+                if (url.hostname === window.location.hostname) {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const destination = link.href;
@@ -50,13 +47,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.service-card, .team-card');
         const modalBackdrop = document.querySelector('.modal-backdrop');
         if (modalBackdrop && cards.length > 0) {
-            // Código do modal... (sem alterações, já funcional)
+            // Código do modal (sem alterações)
+            const modal = modalBackdrop.querySelector('.modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const closeModalBtn = modal.querySelector('.modal-close-btn');
+            cards.forEach(card => card.addEventListener('click', () => {
+                modalTitle.textContent = card.dataset.title;
+                modalDescription.textContent = card.dataset.description;
+                modalBackdrop.style.opacity = '1';
+                modalBackdrop.style.pointerEvents = 'auto';
+            }));
+            const closeModal = () => {
+                modalBackdrop.style.opacity = '0';
+                modalBackdrop.style.pointerEvents = 'none';
+            };
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
         }
 
-        // --- 4. LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (VERSÃO FINAL COM LOGS) ---
+        // --- 4. LÓGICA DO FORMULÁRIO (VERSÃO FINAL E À PROVA DE FALHAS) ---
         const form = document.getElementById('multiStepForm');
         if (form) {
-            console.log('[FORMS] Formulário de diagnóstico encontrado. Inicializando...');
+            console.log('[FORMS] Formulário encontrado. Inicializando...');
             let currentStepIndex = 0;
             const steps = Array.from(form.querySelectorAll('.form-step'));
             const progressSteps = Array.from(document.querySelectorAll('.progress-indicator .step'));
@@ -67,9 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const showStep = (index) => {
                 console.log(`[FORMS] Mostrando etapa ${index + 1}`);
                 steps.forEach((step, i) => {
-                    const isActive = i === index;
-                    step.classList.toggle('active', isActive);
-                    step.classList.toggle('active-step', isActive);
+                    step.classList.toggle('active', i === index);
+                    step.classList.toggle('active-step', i === index);
                 });
                 progressSteps.forEach((step, i) => {
                     step.classList.toggle('active', i === index);
@@ -82,28 +94,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 prevBtn.style.display = currentStepIndex > 0 ? 'inline-flex' : 'none';
                 nextBtn.style.display = currentStepIndex < steps.length - 1 ? 'inline-flex' : 'none';
                 submitBtn.style.display = currentStepIndex === steps.length - 1 ? 'inline-flex' : 'none';
-                console.log(`[FORMS] Botões atualizados. Etapa atual: ${currentStepIndex + 1}.`);
+                console.log(`[FORMS] Botões atualizados para a etapa ${currentStepIndex + 1}.`);
             };
 
             const validateCurrentStep = () => {
                 const currentStepElement = steps[currentStepIndex];
                 console.log(`[FORMS] Validando etapa ${currentStepIndex + 1}...`);
-                const requiredInputs = currentStepElement.querySelectorAll('[data-required="true"], input[required]');
+                const requiredElements = currentStepElement.querySelectorAll('[data-required="true"], input[required]');
                 let isStepValid = true;
 
-                requiredInputs.forEach(inputOrGroup => {
-                    const group = inputOrGroup.closest('.form-group, .relative');
+                requiredElements.forEach(el => {
+                    const group = el.closest('.form-group');
                     let isValid = false;
+                    let inputToCheck = el;
+
+                    // Se o elemento for um div (grupo de rádio/check), ache o primeiro input dentro dele
+                    if (el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
+                        inputToCheck = el.querySelector('input');
+                    }
                     
-                    if (inputOrGroup.classList.contains('radio-group')) {
-                        const radioName = inputOrGroup.querySelector('input[type="radio"]').name;
-                        if (inputOrGroup.querySelector(`input[name="${radioName}"]:checked`)) {
+                    if (inputToCheck.type === 'radio') {
+                        const radioName = inputToCheck.name;
+                        if (currentStepElement.querySelector(`input[name="${radioName}"]:checked`)) {
                             isValid = true;
                         }
-                    } else if (inputOrGroup.querySelector('input[type="checkbox"]')) {
-                        isValid = inputOrGroup.querySelector('input[type="checkbox"]').checked;
-                    } else { // Inputs de texto, etc.
-                        if (inputOrGroup.value.trim() !== '') {
+                    } else if (inputToCheck.type === 'checkbox') {
+                        isValid = inputToCheck.checked;
+                    } else { // Inputs de texto, número, etc.
+                        if (inputToCheck.value.trim() !== '') {
                             isValid = true;
                         }
                     }
@@ -111,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!isValid) {
                         isStepValid = false;
                         group.classList.add('has-error');
-                        console.warn(`[FORMS] Validação FALHOU para o campo no grupo:`, group);
+                        console.warn(`[FORMS] Validação FALHOU para o campo:`, inputToCheck.name);
                     } else {
                         group.classList.remove('has-error');
                     }
@@ -139,10 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             form.addEventListener('submit', (e) => {
-                e.preventDefault();
+                e.preventDefault(); // Impede o envio padrão que causa o erro "not focusable"
                 console.log('[FORMS] Botão "Enviar" clicado.');
                 if (validateCurrentStep()) {
-                    console.log('[FORMS] Formulário válido. Enviando...');
+                    console.log('[FORMS] Formulário válido. Disparando animação de sucesso...');
                     const formWrapper = document.getElementById('form-wrapper');
                     const successAnimation = document.getElementById('success-animation');
                     formWrapper.style.opacity = '0';
@@ -152,12 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(() => {
                            body.classList.add('is-entering');
                            setTimeout(() => window.location.href = 'index.html', 500);
-                        }, 5000);
+                        }, 5000); // Espera 5s na tela de sucesso
                     }, 500);
                 }
             });
             
-            showStep(0); // Inicia o formulário na primeira etapa
+            showStep(0);
         }
 
     } catch (error) {
