@@ -1,49 +1,22 @@
 
-console.log("Arquivo main.js carregado com sucesso!");
-// --- 2. LÓGICA DA CUTSCENE DE INTRODUÇÃO MOBILE ---
+// ======================================================
+// TESTE TEMPORÁRIO PARA FORÇAR A ANIMAÇÃO
+// ======================================================
 try {
+    console.log("Iniciando teste da cutscene...");
     const cutscene = document.getElementById('mobile-intro-cutscene');
-    
-    // Verifica se está em um dispositivo móvel e se a animação ainda não rodou nesta sessão
-    if (cutscene && window.innerWidth <= 768 && !sessionStorage.getItem('morfeuIntroPlayed')) {
-        const title = cutscene.querySelector('.intro-title');
-        const subtitle = cutscene.querySelector('.intro-subtitle');
-        const DURATION = 6000; // 6 segundos no total
 
-        // Inicia a animação
-        cutscene.style.transition = 'opacity 0.5s ease';
-        cutscene.style.opacity = '1';
-
-        // Animação do Título "Morfeu"
-        setTimeout(() => {
-            title.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            title.style.opacity = '1';
-            title.style.transform = 'translateY(0)';
-        }, 500); // 0.5s após o início
-
-        // Animação do Subtítulo
-        setTimeout(() => {
-            subtitle.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            subtitle.style.opacity = '1';
-            subtitle.style.transform = 'translateY(0)';
-        }, 1500); // 1.5s após o início
-
-        // Esconde tudo e remove a cutscene
-        setTimeout(() => {
-            cutscene.style.opacity = '0';
-            // Garante que o elemento suma após a transição
-            setTimeout(() => cutscene.style.display = 'none', 500); 
-        }, DURATION - 500);
-
-        // Marca que a animação já rodou para não repetir
-        sessionStorage.setItem('morfeuIntroPlayed', 'true');
-    } else if (cutscene) {
-        // Se não for pra rodar, apenas esconde o elemento
-        cutscene.style.display = 'none';
+    if (cutscene) {
+        console.log("Elemento #mobile-intro-cutscene ENCONTRADO no HTML. Forçando exibição.");
+        cutscene.style.display = 'flex'; // Força a exibição
+        cutscene.style.opacity = '1';     // Força a visibilidade
+    } else {
+        console.error("ERRO CRÍTICO: Elemento #mobile-intro-cutscene NÃO FOI ENCONTRADO no HTML.");
     }
-} catch (error) {
-    console.error("Erro na cutscene:", error);
+} catch(e) {
+    console.error("Erro durante o teste:", e);
 }
+// ======================================================
 document.addEventListener('DOMContentLoaded', () => {
     try {
         const body = document.body;
