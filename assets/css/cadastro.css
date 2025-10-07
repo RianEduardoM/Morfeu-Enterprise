@@ -113,6 +113,12 @@ body {
   transition: width 0.4s ease-in-out;
 }
 
+.diagnostic-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .form-steps-container {
   position: relative;
   min-height: 300px;
@@ -194,6 +200,23 @@ body {
   border-color: var(--accent-color);
 }
 
+select.form-input {
+  color-scheme: dark;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23858585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.2em;
+  padding-right: 2.5rem;
+}
+
+select.form-input option {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+}
+
 .form-group {
   margin-bottom: 2rem;
 }
@@ -252,6 +275,9 @@ button {
   border: none;
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary {
@@ -259,10 +285,19 @@ button {
   color: var(--bg-dark);
 }
 
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
 .btn-secondary {
   background-color: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background-color: #1f1f1f;
+  border-color: var(--text-secondary);
 }
 
 #submitBtn {
@@ -280,7 +315,9 @@ button {
   display: block;
 }
 
-.has-error .form-input {
+.has-error .form-input,
+.has-error .radio-group label,
+.has-error .checkbox-group label {
   border-color: var(--error-color) !important;
 }
 
@@ -296,83 +333,147 @@ button {
 #success-animation {
   text-align: center;
 }
+
+.success-content,
+.morfeu-reveal {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .success-heading {
   font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
 }
+
 .success-subheading {
   color: var(--text-secondary);
   font-size: 1.1rem;
+  margin-bottom: 3rem;
 }
+
 .morfeu-title {
   font-size: 5rem;
   font-weight: 700;
+  color: var(--text-primary);
 }
+
 .morfeu-subtitle {
   font-size: 1.5rem;
   color: var(--text-secondary);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-dark: #f5f5f5;
+    --bg-card: #ffffff;
+    --border-color: #d4d4d4;
+    --text-primary: #171717;
+    --text-secondary: #737373;
+    --accent-color: #0a0a0a;
+  }
+  #form-wrapper {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  }
+  .form-input {
+    background-color: #ffffff;
+    border-color: #dcdcdc;
+    color: #333333;
+  }
+  .form-input:hover {
+    border-color: #b0b0b0;
+  }
+  .form-input:focus ~ .form-label {
+    background-color: #fafafa;
+  }
+  .step.completed .step-number {
+    color: var(--text-primary);
+  }
+  .radio-group label:hover,
+  .checkbox-group label:hover {
+    background-color: #f0f0f0;
+  }
+  .btn-secondary:hover {
+    background-color: #eaeaea;
+  }
+  select.form-input {
+    color-scheme: light;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  }
+}
+
 /* ======================================================= */
-/* ====== SOLUÇÃO FINAL E CORRETA PARA CELULARES ========= */
+/* ====== SOLUÇÃO FINAL, COMPLETA E CORRETA PARA CELULARES */
 /* ======================================================= */
 @media (max-width: 768px) {
   body {
     padding: 15px 10px;
     align-items: flex-start;
   }
-  #form-wrapper, .form-content {
-    transform: none; /* Remove a rotação */
-  }
+
+  /* Remove os efeitos visuais do container */
   #form-wrapper {
+    transform: none;
     padding: 0;
     border: none;
     background: none;
     box-shadow: none;
   }
   .form-content {
+    transform: none;
     padding: 20px 10px;
   }
-  .progress-indicator {
-    display: none; /* Oculta o progresso */
-  }
-  .form-steps-container {
-    min-height: auto;
-  }
+
+  /* Simplifica o layout */
+  .progress-indicator { display: none; }
+  .form-steps-container { min-height: auto; }
+
+  /* Garante que os passos sejam exibidos corretamente */
   .form-step {
-    position: relative; /* Desativa o posicionamento absoluto */
+    position: relative;
     display: none;
     opacity: 1; 
     transform: none; 
     transition: none;
   }
   .form-step.active-step {
-    display: block; /* Garante que o passo ativo seja visível */
+    display: block;
   }
 
-  /* AQUI ESTÁ A CORREÇÃO PRINCIPAL: DESATIVANDO O LABEL FLUTUANTE */
-  .relative {
-    margin-bottom: 24px;
-  }
+  /* A CORREÇÃO DEFINITIVA: 
+    Desativa o label flutuante e o transforma em um título normal.
+  */
   .form-label {
-    /* Transforma o label flutuante em um label normal */
-    position: static;
-    transform: none;
-    background: none;
-    padding: 0;
-    margin-bottom: 12px;
+    position: static; /* Força o label a deixar de ser flutuante */
+    transform: none !important; /* Remove qualquer animação de movimento */
+    background: none !important;
+    padding: 0 !important;
+    margin-bottom: 12px; /* Adiciona um espaço abaixo da pergunta */
     display: block;
     pointer-events: auto;
-    font-size: 1.1rem;
+    font-size: 1.1rem; /* Deixa a pergunta legível */
     font-weight: 500;
     color: var(--text-primary);
-  }
-  .form-input {
-    /* Devolve o padding normal ao input */
-    padding: 14px;
-    font-size: 16px;
+    z-index: auto;
   }
 
-  /* Desativa a animação do label quando o input está focado */
+  /* Ajusta o campo de resposta */
+  .form-input {
+    padding: 14px; /* Padding normal, sem espaço extra para o label */
+    font-size: 16px; /* Evita o zoom automático do iOS */
+  }
+
+  /* Remove as regras de animação para o estado de foco/preenchido */
   .form-input:focus ~ .form-label,
   .form-input:not(:placeholder-shown) ~ .form-label {
     transform: none;
@@ -380,6 +481,7 @@ button {
     padding: 0;
   }
   
+  /* Ajusta o layout dos botões de navegação */
   .form-navigation {
     flex-direction: column-reverse;
     gap: 12px;
@@ -390,6 +492,7 @@ button {
     padding: 15px;
   }
 
+  /* Ajustes finais de tamanho */
   .morfeu-title { font-size: 3rem; }
   .morfeu-subtitle { font-size: 1.1rem; }
 }
