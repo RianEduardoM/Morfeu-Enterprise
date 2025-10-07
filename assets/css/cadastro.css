@@ -99,25 +99,22 @@ body {
 }
 .form-step {
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(30px);
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
   display: none;
 }
 .form-step.active,
 .form-step.active-step {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(0);
   display: block;
+  animation: fadeIn 0.4s ease-in-out;
 }
-.form-step.exiting {
-  opacity: 0;
-  transform: translateX(-30px);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .relative {
   position: relative;
@@ -164,21 +161,6 @@ body {
 }
 .form-input:focus {
   border-color: var(--accent-color);
-}
-select.form-input {
-  color-scheme: dark;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23858585' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1.2em;
-  padding-right: 2.5rem;
-}
-select.form-input option {
-  background-color: var(--bg-dark);
-  color: var(--text-primary);
 }
 .form-group {
   margin-bottom: 2rem;
@@ -278,38 +260,12 @@ button {
 #success-animation {
   text-align: center;
 }
-.success-content,
-.morfeu-reveal {
-  animation: fadeIn 1s ease-in-out;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 .success-heading {
   font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
-}
-.success-subheading {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  margin-bottom: 3rem;
 }
 .morfeu-title {
   font-size: 5rem;
   font-weight: 700;
-  color: var(--text-primary);
-}
-.morfeu-subtitle {
-  font-size: 1.5rem;
-  color: var(--text-secondary);
 }
 @media (prefers-color-scheme: light) {
   :root {
@@ -344,10 +300,6 @@ button {
   .btn-secondary:hover {
     background-color: #eaeaea;
   }
-  select.form-input {
-    color-scheme: light;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  }
 }
 /* ======================================================= */
 /* ====== SOLUÇÃO FINAL E DEFINITIVA PARA CELULARES ====== */
@@ -373,28 +325,12 @@ button {
   .progress-indicator {
     display: none;
   }
-  .form-steps-container {
-    min-height: auto;
-  }
-  .form-step {
-    position: relative;
-    display: none;
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .form-step.active,
-  .form-step.active-step {
-    display: block;
-  }
-
-  /* A CORREÇÃO QUE REALMENTE FUNCIONA: Desativa o label flutuante */
   .form-label {
-    position: static; /* Impede o label de flutuar */
-    transform: none !important; /* Remove qualquer animação */
+    position: static;
+    transform: none !important;
     background: none !important;
     padding: 0 !important;
-    margin-bottom: 12px; /* Espaço entre a pergunta e a caixa de resposta */
+    margin-bottom: 12px;
     display: block;
     pointer-events: auto;
     font-size: 1.1rem;
@@ -412,7 +348,6 @@ button {
     background: none;
     padding: 0;
   }
-
   .form-navigation {
     flex-direction: column-reverse;
     gap: 12px;
@@ -423,8 +358,5 @@ button {
   }
   .morfeu-title {
     font-size: 3rem;
-  }
-  .morfeu-subtitle {
-    font-size: 1.1rem;
   }
 }
