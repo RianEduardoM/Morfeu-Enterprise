@@ -419,13 +419,15 @@ button {
 /* ================================================= */
 /* VERSÃO FINAL 2.0 - ESTÉTICA MOBILE (Formulário)   */
 /* ================================================= */
+/* ================================================= */
+/* VERSÃO FINAL 3.0 - CORREÇÃO AGRESSIVA DE LAYOUT   */
+/* ================================================= */
 
 @media (max-width: 768px) {
     body {
-        padding: 20px 10px; /* Mais espaço no topo e na base */
-        align-items: flex-start; /* Alinha o form no topo, permitindo rolar */
-        min-height: 100vh;
-        height: auto; /* Permite que o body cresça com o conteúdo */
+        padding: 20px 10px;
+        align-items: flex-start;
+        height: auto;
     }
     .form-container {
         max-width: 100%;
@@ -435,47 +437,60 @@ button {
     }
 
     /* --- INDICADOR DE PROGRESSO --- */
-    .progress-indicator {
-        justify-content: space-around;
-    }
-    .step .step-label, .progress-bar-container {
-        display: none;
-    }
-    .step .step-number {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
+    .progress-indicator, .step .step-label, .progress-bar-container {
+        display: none; /* Esconde tudo para dar foco total ao form */
     }
 
-    /* --- TÍTULOS E CAMPOS DO FORMULÁRIO (AQUI ESTÁ A CORREÇÃO PRINCIPAL) --- */
+    /* --- CORREÇÃO DE SOBREPOSIÇÃO (O MAIS IMPORTANTE) --- */
+    fieldset.form-step {
+        /* Garante que a área de cada etapa tenha layout de bloco */
+        display: block;
+    }
+    
     legend {
-        font-size: 1.4rem;
-        margin-bottom: 25px; /* Aumenta o espaço abaixo do título da etapa */
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 30px; /* Mais espaço abaixo do título */
+        text-align: center;
     }
 
     .form-group {
-        margin-bottom: 24px; /* NOVO: Aumenta MUITO o espaço entre cada pergunta */
+        display: flex; /* USA FLEXBOX PARA CONTROLAR O LAYOUT INTERNO */
+        flex-direction: column; /* Força tudo a ficar em coluna */
+        gap: 12px; /* Espaço garantido entre a pergunta e a resposta */
+        margin-bottom: 28px; /* Espaço generoso entre cada grupo de perguntas */
+        width: 100%;
     }
 
-    .form-group label, .static-label {
-        display: block; /* Garante que o label ocupe sua própria linha */
-        margin-bottom: 12px; /* NOVO: Adiciona um espaço entre a pergunta e o campo de resposta */
-        line-height: 1.5; /* Melhora a legibilidade se a pergunta tiver 2+ linhas */
+    /* Estilo para a PERGUNTA (label) */
+    .form-group label, .form-group .static-label {
+        font-size: 1.1rem; /* Aumenta a fonte da pergunta */
+        line-height: 1.5; /* Melhora a legibilidade de perguntas longas */
+        color: var(--text-primary);
+        order: 1; /* Garante que a pergunta venha primeiro */
     }
 
+    /* Estilo para a RESPOSTA (input, select, etc.) */
+    .form-input, .form-group textarea, .form-group select, .radio-group, .checkbox-group {
+        width: 100%;
+        order: 2; /* Garante que a resposta venha depois */
+    }
     .form-input, .form-group textarea, .form-group select {
         font-size: 16px;
-        padding: 14px; /* Aumenta a área interna para toque */
+        padding: 14px;
     }
 
     /* --- GRUPOS DE OPÇÕES (Rádio e Checkbox) --- */
     .radio-group, .checkbox-group {
         display: flex;
-        flex-direction: column; /* Força o empilhamento vertical das opções */
-        gap: 15px; /* NOVO: Adiciona um espaço entre cada opção */
+        flex-direction: column;
+        gap: 16px; /* Aumenta o espaço entre as opções */
     }
     .radio-group label, .checkbox-group label {
-        margin-bottom: 0; /* Remove a margem extra dos labels internos */
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espaço entre o botão e o texto */
     }
 
     /* --- BOTÕES DE NAVEGAÇÃO --- */
@@ -484,19 +499,15 @@ button {
         flex-direction: column-reverse;
         width: 100%;
         gap: 12px;
-        margin-top: 20px; /* Garante um espaço acima dos botões */
+        margin-top: 30px;
     }
     .form-navigation button {
         width: 100%;
-        padding: 14px;
-        font-size: 1rem;
+        padding: 15px;
+        font-size: 1.1rem;
     }
 
     /* --- ANIMAÇÃO DE SUCESSO --- */
-    .morfeu-title {
-        font-size: 3rem;
-    }
-    .morfeu-subtitle {
-        font-size: 1.1rem;
-    }
+    .morfeu-title { font-size: 3rem; }
+    .morfeu-subtitle { font-size: 1.1rem; }
 }
