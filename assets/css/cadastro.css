@@ -417,20 +417,24 @@ button {
 /* ================================================= */
 
 /* ================================================= */
-/* VERSÃO FINAL - ESTÉTICA MOBILE (Formulário)       */
+/* VERSÃO FINAL 2.0 - ESTÉTICA MOBILE (Formulário)   */
 /* ================================================= */
 
 @media (max-width: 768px) {
     body {
-        padding: 10px;
-        align-items: flex-start;
+        padding: 20px 10px; /* Mais espaço no topo e na base */
+        align-items: flex-start; /* Alinha o form no topo, permitindo rolar */
+        min-height: 100vh;
+        height: auto; /* Permite que o body cresça com o conteúdo */
     }
     .form-container {
         max-width: 100%;
     }
     #form-wrapper {
-        padding: 15px;
+        padding: 20px 15px;
     }
+
+    /* --- INDICADOR DE PROGRESSO --- */
     .progress-indicator {
         justify-content: space-around;
     }
@@ -442,24 +446,53 @@ button {
         height: 32px;
         font-size: 0.9rem;
     }
+
+    /* --- TÍTULOS E CAMPOS DO FORMULÁRIO (AQUI ESTÁ A CORREÇÃO PRINCIPAL) --- */
     legend {
         font-size: 1.4rem;
+        margin-bottom: 25px; /* Aumenta o espaço abaixo do título da etapa */
     }
-    .form-input, .form-group textarea {
+
+    .form-group {
+        margin-bottom: 24px; /* NOVO: Aumenta MUITO o espaço entre cada pergunta */
+    }
+
+    .form-group label, .static-label {
+        display: block; /* Garante que o label ocupe sua própria linha */
+        margin-bottom: 12px; /* NOVO: Adiciona um espaço entre a pergunta e o campo de resposta */
+        line-height: 1.5; /* Melhora a legibilidade se a pergunta tiver 2+ linhas */
+    }
+
+    .form-input, .form-group textarea, .form-group select {
         font-size: 16px;
-        padding: 12px;
+        padding: 14px; /* Aumenta a área interna para toque */
     }
+
+    /* --- GRUPOS DE OPÇÕES (Rádio e Checkbox) --- */
+    .radio-group, .checkbox-group {
+        display: flex;
+        flex-direction: column; /* Força o empilhamento vertical das opções */
+        gap: 15px; /* NOVO: Adiciona um espaço entre cada opção */
+    }
+    .radio-group label, .checkbox-group label {
+        margin-bottom: 0; /* Remove a margem extra dos labels internos */
+    }
+
+    /* --- BOTÕES DE NAVEGAÇÃO --- */
     .form-navigation {
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
         gap: 12px;
+        margin-top: 20px; /* Garante um espaço acima dos botões */
     }
     .form-navigation button {
         width: 100%;
         padding: 14px;
         font-size: 1rem;
     }
+
+    /* --- ANIMAÇÃO DE SUCESSO --- */
     .morfeu-title {
         font-size: 3rem;
     }
