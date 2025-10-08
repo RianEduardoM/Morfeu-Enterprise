@@ -1,5 +1,5 @@
 /* ========================================= */
-/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA v4.6*/
+/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA v4.9*/
 /* ========================================= */
 
 #intro-sequence {
@@ -16,7 +16,7 @@
   background-color: #000;
 }
 
-/* --- PORTAL DE ENTRADA --- */
+/* --- Portal de Acolhimento --- */
 #intro-gate {
   display: flex;
   justify-content: center;
@@ -27,29 +27,79 @@
   width: 100%;
   height: 100%;
   z-index: 100;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background-color: #000;
+  opacity: 1;
+  background: radial-gradient(circle, #100a1c, #010002 70%);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-
-#start-sequence-btn {
-  background-color: transparent;
-  border: 2px solid rgba(220, 180, 241, 0.8);
-  color: rgba(220, 180, 241, 0.8);
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 1rem 2.5rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+#intro-gate.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}
+.welcome-hub {
+  padding: 40px;
+  max-width: 550px;
+  width: 90%;
+  text-align: center;
+  background: rgba(18, 18, 18, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: hub-fade-in 1.5s ease-out;
+}
+@keyframes hub-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.welcome-logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.welcome-subtitle {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+  margin-bottom: 2.5rem;
+}
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+}
+.welcome-btn {
+  display: inline-block;
+  width: 100%;
+  max-width: 350px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
   transition: all 0.3s ease;
-  text-shadow: 0 0 10px rgba(220, 180, 241, 0.5);
 }
-
-#start-sequence-btn:hover {
-  background-color: rgba(220, 180, 241, 0.8);
-  color: #000;
-  box-shadow: 0 0 25px rgba(220, 180, 241, 0.8);
+.welcome-btn.primary {
+  color: #fff;
+  background: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%);
+  box-shadow: 0 4px 15px rgba(109, 40, 217, 0.2);
+}
+.welcome-btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(109, 40, 217, 0.4);
 }
 
 /* --- ELEMENTOS GERAIS DA SEQUÊNCIA --- */
@@ -67,9 +117,10 @@
   transform-style: preserve-3d;
 }
 
-/* === NOVO: SANTUÁRIO ETÉREO (VFX de Fundo) === */
+/* === ATUALIZADO: Santuário Etéreo Minimalista === */
 #mantra-sequence {
-  background: #010002;
+  /* Fundo roxo como solicitado */
+  background: radial-gradient(ellipse at center, #3b0764, #11021c 70%);
 }
 
 #mantra-sanctuary-container {
@@ -83,14 +134,15 @@
   opacity: 1;
 }
 
-/* Camada de fundo para todos os VFX */
+/* Camada de fundo para a borda */
 .vfx-background-layer {
   grid-area: 1 / 1;
   position: relative;
   width: 500px;
   height: 500px;
   z-index: 1;
-  overflow: hidden;
+  display: grid;
+  place-items: center;
 }
 
 /* Imagem principal, na camada superior */
@@ -105,15 +157,19 @@
   animation: infuse-image 2s ease-out 1.5s forwards;
 }
 
-/* 1. Efeito da Borda de Energia */
+/* REMOVIDO: Efeitos de fogo e partículas para um visual mais limpo */
+.fire-vfx-container,
+.particle-vfx-container {
+  display: none;
+}
+
+/* 1. Efeito da Borda de Energia (Adaptado para Quadrado) */
 .animated-gradient-border {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 380px;
+  width: 380px; /* Tamanho ajustado para emoldurar a imagem */
   height: 380px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
+  /* De Círculo para Quadrado Arredondado */
+  border-radius: 24px;
   opacity: 0;
   animation: border-fade-in 2s ease-out 0.5s forwards;
 }
@@ -121,7 +177,8 @@
   content: "";
   position: absolute;
   inset: -3px;
-  border-radius: 50%;
+  /* De Círculo para Quadrado Arredondado */
+  border-radius: 26px;
   background: conic-gradient(#a855f7, #6d28d9, #d946ef, #a855f7);
   animation: rotate 8s linear infinite;
   filter: blur(5px);
@@ -130,106 +187,13 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: #010002;
+  /* De Círculo para Quadrado Arredondado */
+  border-radius: 24px;
+  /* Usa um fundo escuro do gradiente para preencher o interior da borda */
+  background: #11021c;
 }
 
-/* 2. Efeito de Fogo Etéreo Roxo */
-.fire-vfx-container {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100%;
-  height: 50%;
-  transform: translateX(-50%);
-  filter: contrast(1.5); /* Torna o efeito mais vibrante */
-}
-
-/* Gera 10 "chamas" via pseudo-elementos */
-.fire-vfx-container::before,
-.fire-vfx-container::after {
-  content: "";
-}
-.fire-vfx-container::before,
-.fire-vfx-container::after,
-.fire-vfx-container > div::before,
-.fire-vfx-container > div::after {
-  position: absolute;
-  bottom: 0;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #c084fc 10%,
-    #6d28d9 60%,
-    transparent 80%
-  );
-  filter: blur(15px);
-  animation: fire-wisp 10s linear infinite;
-}
-
-/* Distribuição e delays das chamas */
-.fire-vfx-container::before {
-  left: 10%;
-  animation-delay: -1s;
-}
-.fire-vfx-container::after {
-  left: 20%;
-  animation-delay: -2s;
-}
-.fire-vfx-container > div:nth-of-type(1)::before {
-  left: 30%;
-  animation-delay: -3s;
-}
-.fire-vfx-container > div:nth-of-type(1)::after {
-  left: 40%;
-  animation-delay: -4s;
-}
-.fire-vfx-container > div:nth-of-type(2)::before {
-  left: 50%;
-  animation-delay: -5s;
-}
-.fire-vfx-container > div:nth-of-type(2)::after {
-  left: 60%;
-  animation-delay: -6s;
-}
-.fire-vfx-container > div:nth-of-type(3)::before {
-  left: 70%;
-  animation-delay: -7s;
-}
-.fire-vfx-container > div:nth-of-type(3)::after {
-  left: 80%;
-  animation-delay: -8s;
-}
-.fire-vfx-container > div:nth-of-type(4)::before {
-  left: 90%;
-  animation-delay: -9s;
-}
-.fire-vfx-container > div:nth-of-type(4)::after {
-  left: 100%;
-  animation-delay: -10s;
-}
-
-/* 3. Efeito de Partículas Flutuantes */
-.particle-vfx-container {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-      circle at 10% 20%,
-      #fff 1px,
-      transparent 1px
-    ),
-    radial-gradient(circle at 80% 30%, #fff 1px, transparent 1px),
-    radial-gradient(circle at 50% 70%, #fff 2px, transparent 2px),
-    radial-gradient(circle at 25% 85%, #fff 1px, transparent 1px),
-    radial-gradient(circle at 70% 90%, #fff 2px, transparent 2px);
-  background-size: 100% 100%;
-  opacity: 0.3;
-  animation: particle-float 20s linear infinite;
-}
-
-/* === KEYFRAMES PARA O SANTUÁRIO ETÉREO === */
+/* === KEYFRAMES === */
 @keyframes infuse-image {
   from {
     opacity: 0;
@@ -243,33 +207,12 @@
 }
 @keyframes border-fade-in {
   to {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 }
 @keyframes rotate {
   to {
     transform: rotate(360deg);
-  }
-}
-@keyframes fire-wisp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-200px) scale(0.5);
-    opacity: 0;
-  }
-}
-@keyframes particle-float {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 -200px;
   }
 }
 
@@ -282,7 +225,6 @@
     #000000 100%
   );
 }
-
 .morfeu-logo {
   display: flex;
   font-size: 7rem;
@@ -291,7 +233,6 @@
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
   animation: morfeu-float 8s ease-in-out infinite alternate;
 }
-
 .morfeu-letter {
   display: inline-block;
   opacity: 0;
@@ -301,7 +242,6 @@
     morfeu-pulse-glow 4s ease-in-out infinite alternate,
     morfeu-shimmer 10s linear infinite;
 }
-
 .morfeu-version-subtitle {
   font-size: 0.8rem;
   font-weight: 400;
@@ -313,7 +253,6 @@
   transition: opacity 1.2s ease 0.5s;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
 }
-
 .morfeu-tagline {
   font-size: 1.2rem;
   font-weight: 400;
@@ -324,8 +263,6 @@
   transform: translateY(20px);
   transition: opacity 1.2s ease 0.8s, transform 1.2s ease 0.8s;
 }
-
-/* --- Classes de controle do JS --- */
 .visible {
   opacity: 1 !important;
   pointer-events: all !important;
@@ -337,8 +274,6 @@
 .move-up {
   transform: translateY(0) !important;
 }
-
-/* --- Keyframes de animação MORFEU --- */
 @keyframes batuque-pop {
   0% {
     transform: scale(1);
@@ -352,7 +287,6 @@
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
   }
 }
-
 @keyframes morfeu-float {
   from {
     transform: translateY(0px);
@@ -361,7 +295,6 @@
     transform: translateY(-8px);
   }
 }
-
 @keyframes morfeu-pulse-glow {
   from {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
@@ -370,7 +303,6 @@
     text-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
   }
 }
-
 @keyframes morfeu-shimmer {
   0% {
     color: #ccc;
@@ -389,9 +321,44 @@
     color: #ccc;
   }
 }
-
-/* --- Correção do Scroll durante a Introdução --- */
 body.no-scroll {
   overflow: hidden;
   height: 100vh;
+}
+
+/* ========================================= */
+/* === REGRAS DE RESPONSIVIDADE (CELULAR) === */
+/* ========================================= */
+@media (max-width: 768px) {
+  /* Ajusta o Portal de Acolhimento */
+  .welcome-title {
+    font-size: 2rem;
+  }
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Ajusta a cena do Mantra */
+  .vfx-background-layer {
+    width: 90vw;
+    height: 90vw;
+  }
+  #mantra-logo-final {
+    width: 70vw;
+    max-width: 280px;
+  }
+  .animated-gradient-border {
+    width: 80vw;
+    height: 80vw;
+    max-width: 320px;
+    max-height: 320px;
+  }
+
+  /* Ajusta a cena do Morfeu */
+  .morfeu-logo {
+    font-size: 3.5rem;
+  }
+  .morfeu-tagline {
+    font-size: 1rem;
+  }
 }
