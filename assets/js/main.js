@@ -1,8 +1,9 @@
+// VERSÃO FINAL E DEFINITIVA - COM INTRODUÇÃO CINEMATOGRÁFICA
 document.addEventListener("DOMContentLoaded", () => {
   try {
     const body = document.body;
 
-    // --- LÓGICA DE TRANSIÇÃO DE PÁGINA (EXISTENTE) ---
+    // --- LÓGICA DE TRANSIÇÃO DE PÁGINA (EXISTENTE E FUNCIONAL) ---
     requestAnimationFrame(() => {
       body.classList.remove("is-entering");
     });
@@ -26,90 +27,109 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- NOVA LÓGICA DA INTRODUÇÃO CINEMATOGRÁFICA ---
     const introSequence = document.getElementById("intro-sequence");
-    if (introSequence && !sessionStorage.getItem("introPlayed")) {
-      // Seleciona todos os elementos da cena
-      const audioGlitchAmbient = document.getElementById(
-        "audio-glitch-ambient"
-      );
-      const audioGlitchImpact = document.getElementById("audio-glitch-impact");
-      const audioReveal = document.getElementById("audio-reveal");
-      const audioShine = document.getElementById("audio-shine");
-      const mantraSequence = document.getElementById("mantra-sequence");
-      const morfeuSequence = document.getElementById("morfeu-sequence");
-      const glitchOverlay = mantraSequence.querySelector(".glitch-overlay");
-      const mantraLogo = mantraSequence.querySelector(".mantra-logo");
-      const morfeuLogo = morfeuSequence.querySelector(".morfeu-logo");
-      const morfeuTagline = morfeuSequence.querySelector(".morfeu-tagline");
-
-      // --- INICIA A TIMELINE DA ANIMAÇÃO ---
-
-      // 0.0s: A cena começa
+    if (introSequence && !sessionStorage.getItem("introPlayed_v2")) {
+      // Exibe o portal de entrada
       introSequence.style.display = "flex";
-      setTimeout(() => (introSequence.style.opacity = "1"), 100);
-
-      // Fase 1: Mantra
       setTimeout(() => {
-        mantraSequence.style.opacity = "1";
-        audioGlitchAmbient.volume = 0.3;
-        audioGlitchAmbient.play();
-      }, 500); // 0.5s
+        introSequence.style.opacity = "1";
+      }, 50);
 
-      setTimeout(() => {
-        glitchOverlay.style.display = "block";
-        mantraLogo.style.opacity = "1";
-        mantraLogo.classList.add("glitching");
-      }, 2000); // 2.0s
+      const startBtn = document.getElementById("start-sequence-btn");
+      const introGate = document.getElementById("intro-gate");
 
-      // 5.5s: Impacto e corte
-      setTimeout(() => {
-        audioGlitchImpact.play();
-        mantraSequence.style.opacity = "0";
-        audioGlitchAmbient.pause();
-      }, 5500);
+      startBtn.addEventListener("click", () => {
+        // Esconde o botão e inicia a sequência
+        introGate.classList.add("hidden");
 
-      // Fase 2: Transição (silêncio)
-      // (Ocorre naturalmente entre 6.0s e 7.0s)
+        // Seleciona todos os elementos da cena
+        const allAudio = introSequence.querySelectorAll("audio");
+        const audioGlitchAmbient = document.getElementById(
+          "audio-glitch-ambient"
+        );
+        const audioGlitchImpact = document.getElementById(
+          "audio-glitch-impact"
+        );
+        const audioReveal = document.getElementById("audio-reveal");
+        const audioShine = document.getElementById("audio-shine");
 
-      // Fase 3: Morfeu
-      setTimeout(() => {
-        morfeuSequence.style.opacity = "1";
-        audioReveal.volume = 0.5;
-        audioReveal.play();
-      }, 7000); // 7.0s
+        const gridBg = document.getElementById("intro-grid-background");
+        const mantraSequence = document.getElementById("mantra-sequence");
+        const mantraLogoContainer = mantraSequence.querySelector(
+          ".mantra-logo-container"
+        );
+        const morfeuSequence = document.getElementById("morfeu-sequence");
+        const morfeuLogo = morfeuSequence.querySelector(".morfeu-logo");
+        const morfeuTagline = morfeuSequence.querySelector(".morfeu-tagline");
 
-      setTimeout(() => {
-        morfeuLogo.classList.add("visible", "move-up");
-      }, 7200); // 7.2s
+        // Garante que todos os sons possam tocar
+        allAudio.forEach((audio) => audio.play().then(() => audio.pause()));
 
-      setTimeout(() => {
-        morfeuTagline.classList.add("visible", "move-up");
-        audioShine.play();
-      }, 8200); // 8.2s
+        // --- INICIA A TIMELINE DA ANIMAÇÃO ---
 
-      // 11.5s: Fim da cena
-      setTimeout(() => {
-        introSequence.style.opacity = "0";
-      }, 11500);
+        // 0.0s (após o clique): A cena começa
+        setTimeout(() => {
+          gridBg.classList.add("visible");
+          mantraSequence.classList.add("visible");
+          audioGlitchAmbient.volume = 0.3;
+          audioGlitchAmbient.play();
+        }, 500);
 
-      // 12.0s: Esconde a animação e permite a interação com a página
-      setTimeout(() => {
-        introSequence.style.display = "none";
-      }, 12000);
+        // 2.0s: Logo Mantra aparece e começa o glitch
+        setTimeout(() => {
+          mantraLogoContainer.classList.add("visible", "glitching");
+        }, 2000);
 
-      // Marca que a animação já foi vista nesta sessão
-      sessionStorage.setItem("introPlayed", "true");
+        // 5.5s: Impacto e corte para preto
+        setTimeout(() => {
+          audioGlitchImpact.play();
+          mantraSequence.classList.add("hidden");
+          audioGlitchAmbient.pause();
+        }, 5500);
+
+        // 7.0s: Início da revelação Morfeu
+        setTimeout(() => {
+          gridBg.classList.add("hidden");
+          morfeuSequence.classList.add("visible");
+          audioReveal.volume = 0.5;
+          audioReveal.play();
+        }, 7000);
+
+        // 7.2s: Logo Morfeu aparece
+        setTimeout(() => {
+          morfeuLogo.classList.add("visible", "move-up");
+        }, 7200);
+
+        // 8.2s: Tagline Morfeu aparece
+        setTimeout(() => {
+          morfeuTagline.classList.add("visible", "move-up");
+          audioShine.play();
+        }, 8200);
+
+        // 11.5s: Fade out final
+        setTimeout(() => {
+          introSequence.classList.add("hidden");
+        }, 11500);
+
+        // 12.0s: Esconde completamente a animação
+        setTimeout(() => {
+          introSequence.style.display = "none";
+        }, 12000);
+
+        // Marca que a animação já foi vista nesta sessão
+        sessionStorage.setItem("introPlayed_v2", "true");
+      });
     } else if (introSequence) {
       introSequence.style.display = "none";
     }
 
-    // --- LÓGICA DO MODAL (EXISTENTE) ---
+    // --- LÓGICA DO MODAL (EXISTENTE E FUNCIONAL) ---
     const cards = document.querySelectorAll(".service-card, .team-card");
     const modalBackdrop = document.querySelector(".modal-backdrop");
     if (modalBackdrop && cards.length > 0) {
       // ... (código do modal permanece o mesmo)
     }
 
-    // --- LÓGICA DO FORMULÁRIO DE DIAGNÓSTICO (EXISTENTE) ---
+    // --- LÓGICA DO FORMULÁRIO (EXISTENTE E FUNCIONAL) ---
     const form = document.getElementById("multiStepForm");
     if (form) {
       // ... (código do formulário permanece o mesmo)

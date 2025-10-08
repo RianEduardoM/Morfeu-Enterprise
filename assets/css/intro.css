@@ -1,5 +1,5 @@
 /* ========================================= */
-/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA     */
+/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA v2.0*/
 /* ========================================= */
 
 #intro-sequence {
@@ -10,14 +10,58 @@
   height: 100vh;
   background-color: #000000;
   z-index: 9999;
-  display: none; /* O JavaScript irá controlar a visibilidade */
-  opacity: 0;
+  display: flex; /* Começa visível para mostrar o botão */
+  justify-content: center;
+  align-items: center;
   font-family: "Inter", sans-serif;
   color: #ededed;
   overflow: hidden;
-  cursor: wait; /* Mostra um cursor de espera durante a animação */
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
+/* --- PORTAL DE ENTRADA (BOTÃO) --- */
+#intro-gate {
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+#start-sequence-btn {
+  background-color: transparent;
+  border: 2px solid #00e0e0;
+  color: #00e0e0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #00e0e0;
+}
+
+#start-sequence-btn:hover {
+  background-color: #00e0e0;
+  color: #000;
+  box-shadow: 0 0 20px #00e0e0;
+}
+
+/* --- FUNDO GRÁFICO --- */
+#intro-grid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 224, 224, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 224, 224, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* --- ELEMENTOS GERAIS DA SEQUÊNCIA --- */
 .sequence-part {
   position: absolute;
   width: 100%;
@@ -26,13 +70,50 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  opacity: 0; /* Começa invisível */
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.5s ease-in-out;
 }
 
 /* --- FASE 1: MANTRA --- */
-#mantra-sequence {
-  background-color: #050505;
+.mantra-logo-container {
+  text-align: center;
+}
+
+.mantra-logo {
+  display: flex;
+  align-items: flex-end;
+  width: 150px;
+  height: 100px;
+  color: #00e0e0;
+  filter: drop-shadow(0 0 3px #00e0e0) drop-shadow(0 0 10px #00e0e0);
+}
+
+/* Recriação do 'M' Geométrico */
+.mantra-m-left,
+.mantra-m-right {
+  width: 33.3%;
+  height: 100%;
+  background-color: currentColor;
+  clip-path: polygon(0 0, 100% 100%, 100% 100%, 30% 100%, 0 70%);
+}
+.mantra-m-right {
+  transform: scaleX(-1);
+}
+.mantra-m-center {
+  width: 33.3%;
+  height: 50%;
+  background-color: currentColor;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.mantra-subtitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.5rem;
+  color: #00e0e0;
+  text-shadow: 0 0 5px #00e0e0;
+  margin-top: 15px;
 }
 
 .glitch-overlay {
@@ -41,68 +122,43 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(
-      90deg,
-      rgba(255, 0, 0, 0.04),
-      rgba(0, 255, 0, 0.02),
-      rgba(0, 0, 255, 0.04)
-    );
-  background-size: 100% 2px, 3px 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 3px;
   z-index: 1;
-  animation: glitch-scanline 10s linear infinite;
-  display: none; /* Ativado por JS */
+  animation: glitch-scanline 8s linear infinite;
 }
 
-.mantra-logo {
-  font-size: 12rem;
-  font-weight: 700;
-  color: #00e0e0; /* Ciano néon */
-  text-shadow: 0 0 5px #00e0e0, 0 0 15px #00e0e0, 0 0 30px #00e0e0,
-    0 0 50px #4dffff;
-  z-index: 2;
-  opacity: 0; /* Ativado por JS */
-  transition: opacity 0.1s ease;
+.mantra-logo-container.glitching {
+  animation: glitch-flicker 3s infinite;
 }
 
-.mantra-logo.glitching {
-  animation: glitch-text-flicker 2s infinite;
-}
-
-.mantra-logo.glitching::before,
-.mantra-logo.glitching::after {
-  content: "M";
+.mantra-logo-container.glitching::before,
+.mantra-logo-container.glitching::after {
+  content: ""; /* Conteúdo vazio, apenas para o efeito visual */
   position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
-  background: #050505;
+  background: #000;
   overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
+  z-index: 3;
 }
 
-.mantra-logo.glitching::before {
-  left: -2px;
-  text-shadow: 1px 0 blue;
+.mantra-logo-container.glitching::before {
   animation: glitch-anim-1 2s infinite linear alternate-reverse;
 }
-
-.mantra-logo.glitching::after {
-  left: 2px;
-  text-shadow: -1px 0 red;
-  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+.mantra-logo-container.glitching::after {
+  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
 }
 
 /* --- FASE 2: MORFEU --- */
-#morfeu-sequence {
-  background-color: #000000;
-}
-
 .morfeu-logo {
   font-size: 6rem;
   font-weight: 600;
   letter-spacing: 2px;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(20px);
   transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1),
     transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -114,7 +170,7 @@
   margin-top: 10px;
   letter-spacing: 1px;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(20px);
   transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
 }
 
@@ -122,14 +178,15 @@
 .visible {
   opacity: 1 !important;
 }
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
 .move-up {
   transform: translateY(0) !important;
 }
 
-/* ========================================= */
-/* ANIMAÇÕES (KEYFRAMES)                     */
-/* ========================================= */
-
+/* Keyframes de animação */
 @keyframes glitch-scanline {
   0% {
     background-position: 0 0;
@@ -138,139 +195,52 @@
     background-position: 0 100%;
   }
 }
-
-@keyframes glitch-text-flicker {
+@keyframes glitch-flicker {
   0%,
   100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
-
 @keyframes glitch-anim-1 {
   0% {
     clip: rect(42px, 9999px, 44px, 0);
   }
-  5% {
-    clip: rect(7px, 9999px, 76px, 0);
-  }
-  10% {
-    clip: rect(43px, 9999px, 99px, 0);
-  }
-  15% {
-    clip: rect(28px, 9999px, 73px, 0);
-  }
   20% {
-    clip: rect(45px, 9999px, 59px, 0);
-  }
-  25% {
-    clip: rect(10px, 9999px, 99px, 0);
-  }
-  30% {
-    clip: rect(82px, 9999px, 53px, 0);
-  }
-  35% {
-    clip: rect(43px, 9999px, 14px, 0);
+    clip: rect(12px, 9999px, 76px, 0);
   }
   40% {
-    clip: rect(88px, 9999px, 46px, 0);
-  }
-  45% {
-    clip: rect(12px, 9999px, 8px, 0);
-  }
-  50% {
-    clip: rect(57px, 9999px, 75px, 0);
-  }
-  55% {
-    clip: rect(15px, 9999px, 77px, 0);
+    clip: rect(88px, 9999px, 99px, 0);
   }
   60% {
-    clip: rect(2px, 9999px, 83px, 0);
-  }
-  65% {
-    clip: rect(82px, 9999px, 100px, 0);
-  }
-  70% {
-    clip: rect(59px, 9999px, 40px, 0);
-  }
-  75% {
-    clip: rect(31px, 9999px, 9px, 0);
+    clip: rect(28px, 9999px, 19px, 0);
   }
   80% {
-    clip: rect(21px, 9999px, 95px, 0);
+    clip: rect(45px, 9999px, 98px, 0);
   }
-  85% {
-    clip: rect(89px, 9999px, 79px, 0);
-  }
-  90% {
-    clip: rect(53px, 9999px, 82px, 0);
-  }
-  95% {
-    clip: rect(10px, 9999px, 100px, 0);
+  100% {
+    clip: rect(10px, 9999px, 85px, 0);
   }
 }
-
 @keyframes glitch-anim-2 {
   0% {
-    clip: rect(82px, 9999px, 3px, 0);
-  }
-  5% {
-    clip: rect(27px, 9999px, 92px, 0);
-  }
-  10% {
-    clip: rect(100px, 9999px, 60px, 0);
-  }
-  15% {
-    clip: rect(16px, 9999px, 37px, 0);
+    clip: rect(5px, 9999px, 82px, 0);
   }
   20% {
-    clip: rect(93px, 9999px, 9px, 0);
-  }
-  25% {
-    clip: rect(53px, 9999px, 31px, 0);
-  }
-  30% {
-    clip: rect(89px, 9999px, 57px, 0);
-  }
-  35% {
-    clip: rect(1px, 9999px, 81px, 0);
+    clip: rect(90px, 9999px, 4px, 0);
   }
   40% {
-    clip: rect(76px, 9999px, 63px, 0);
-  }
-  45% {
-    clip: rect(37px, 9999px, 86px, 0);
-  }
-  50% {
-    clip: rect(10px, 9999px, 35px, 0);
-  }
-  55% {
-    clip: rect(28px, 9999px, 36px, 0);
+    clip: rect(33px, 9999px, 93px, 0);
   }
   60% {
-    clip: rect(2px, 9999px, 5px, 0);
-  }
-  65% {
-    clip: rect(72px, 9999px, 83px, 0);
-  }
-  70% {
-    clip: rect(9px, 9999px, 70px, 0);
-  }
-  75% {
-    clip: rect(56px, 9999px, 10px, 0);
+    clip: rect(7px, 9999px, 59px, 0);
   }
   80% {
-    clip: rect(38px, 9999px, 97px, 0);
+    clip: rect(40px, 9999px, 13px, 0);
   }
-  85% {
-    clip: rect(1px, 9999px, 12px, 0);
-  }
-  90% {
-    clip: rect(44px, 9999px, 5px, 0);
-  }
-  95% {
-    clip: rect(72px, 9999px, 47px, 0);
+  100% {
+    clip: rect(94px, 9999px, 69px, 0);
   }
 }

@@ -6,6 +6,7 @@
     <title>Morfeu - Transforme seus sonhos em império</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/intro.css" />
+    
   </head>
   <body class="is-entering">
     <div id="intro-sequence">
@@ -13,6 +14,7 @@
         id="audio-glitch-ambient"
         src="assets/audio/glitch_ambient.mp3"
         preload="auto"
+        loop
       ></audio>
       <audio
         id="audio-glitch-impact"
@@ -30,10 +32,21 @@
         preload="auto"
       ></audio>
 
+      <div id="intro-gate">
+        <button id="start-sequence-btn">Iniciar Experiência</button>
+      </div>
+
+      <div id="intro-grid-background"></div>
+
       <div class="sequence-part" id="mantra-sequence">
         <div class="glitch-overlay"></div>
-        <div class="mantra-logo">
-          <span>M</span>
+        <div class="mantra-logo-container">
+          <div class="mantra-logo">
+            <div class="mantra-m-left"></div>
+            <div class="mantra-m-center"></div>
+            <div class="mantra-m-right"></div>
+          </div>
+          <div class="mantra-subtitle">UNLIMITED</div>
         </div>
       </div>
 
@@ -85,8 +98,8 @@
           <div class="team-grid">
             <div
               class="team-card"
-              data-title="ATENA – Análise Tática e Estratégica para Novos Ativos"
-              data-description="A ATENA é sua linha de frente na jornada empreendedora. Esta equipe é especialista em transformar ideias brutas em modelos de negócio sólidos. Eles conduzem a análise de mercado, definem seu público-alvo, estruturam seu plano de negócios e cuidam de toda a burocracia para a formalização do seu CNPJ. Com a ATENA, sua base será inabalável."
+              data-title="ATENA"
+              data-description="A ATENA é sua linha de frente na jornada empreendedora. Esta equipe é especialista em transformar ideias brutas em modelos de negócio sólidos."
             >
               <div class="team-card-header">
                 <h3>ATENA</h3>
@@ -96,8 +109,8 @@
             </div>
             <div
               class="team-card"
-              data-title="ARES – Amplificação e Ressoância Estratégica de Sinergias"
-              data-description="Com o negócio formalizado, é hora de conquistar o mercado. A equipe ARES entra em campo para construir uma marca forte e memorável. Eles desenvolvem sua identidade visual, criam estratégias de marketing digital, gerenciam suas redes sociais e otimizam suas vendas. ARES é a força que impulsiona seu crescimento e visibilidade."
+              data-title="ARES"
+              data-description="Com o negócio formalizado, é hora de conquistar o mercado. A equipe ARES entra em campo para construir uma marca forte e memorável."
             >
               <div class="team-card-header">
                 <h3>ARES</h3>
@@ -107,8 +120,8 @@
             </div>
             <div
               class="team-card"
-              data-title="AURORA – Análise Unificada de Recursos, Orçamento, Receita e Administração"
-              data-description="A AURORA é a guardiã da saúde financeira do seu negócio. Esta equipe de consultores financeiros oferece análise de fluxo de caixa, planejamento orçamentário, estratégias de precificação e suporte na gestão administrativa. Com a AURORA, você terá a clareza e a confiança necessárias para tomar as melhores decisões financeiras."
+              data-title="AURORA"
+              data-description="A AURORA é a guardiã da saúde financeira do seu negócio. Esta equipe de consultores financeiros oferece análise de fluxo de caixa, planejamento orçamentário e muito mais."
             >
               <div class="team-card-header">
                 <h3>AURORA</h3>
@@ -130,14 +143,12 @@
         </div>
       </div>
     </div>
-
     <footer class="footer">
       <div class="container footer-content">
         <p>&copy; 2025 Morfeu. Transformando sonhos em impérios.</p>
         <a href="contato.html" class="footer-contact-link">Contato</a>
       </div>
     </footer>
-
     <div class="transition-overlay"></div>
     <script src="assets/js/main.js"></script>
   </body>
