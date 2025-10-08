@@ -4,31 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Morfeu - Transforme seus sonhos em império</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/intro.css" />
-    
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body class="is-entering">
-    <div id="intro-sequence">
+    <div id="intro-sequence" style="opacity: 0; display: none">
       <audio
         id="audio-glitch-ambient"
-        src="assets/audio/glitch_ambient.mp3"
+        src="assets/audio/glitch-ambient.mp3"
         preload="auto"
         loop
       ></audio>
       <audio
-        id="audio-glitch-impact"
-        src="assets/audio/glitch_impact.mp3"
-        preload="auto"
-      ></audio>
-      <audio
         id="audio-reveal"
-        src="assets/audio/reveal_sound.mp3"
+        src="assets/audio/reveal.mp3"
         preload="auto"
       ></audio>
       <audio
         id="audio-shine"
-        src="assets/audio/shine_effect.mp3"
+        src="assets/audio/shine.mp3"
         preload="auto"
       ></audio>
 
@@ -36,26 +30,35 @@
         <button id="start-sequence-btn">Iniciar Experiência</button>
       </div>
 
-      <div id="intro-grid-background"></div>
-
-      <div class="sequence-part" id="mantra-sequence">
-        <div class="glitch-overlay"></div>
-        <div class="mantra-logo-container">
-          <div class="mantra-logo">
-            <div class="mantra-m-left"></div>
-            <div class="mantra-m-center"></div>
-            <div class="mantra-m-right"></div>
+      <div id="mantra-sequence" class="sequence-part">
+        <div id="mantra-sanctuary-container">
+          <div class="vfx-background-layer">
+            <div class="animated-gradient-border"></div>
+            <div class="fire-vfx-container"></div>
+            <div class="particle-vfx-container"></div>
           </div>
-          <div class="mantra-subtitle">UNLIMITED</div>
+
+          <img
+            id="mantra-logo-final"
+            src="assets/img/mantra-logo.png"
+            alt="Mantra Unlimited Logo"
+          />
         </div>
       </div>
 
-      <div class="sequence-part" id="morfeu-sequence">
-        <div class="morfeu-logo">Morfeu</div>
-        <div class="morfeu-tagline">Transformando sonhos em impérios.</div>
+      <div id="morfeu-sequence" class="sequence-part">
+        <div class="morfeu-logo">
+          <span class="morfeu-letter">M</span>
+          <span class="morfeu-letter">O</span>
+          <span class="morfeu-letter">R</span>
+          <span class="morfeu-letter">F</span>
+          <span class="morfeu-letter">E</span>
+          <span class="morfeu-letter">U</span>
+        </div>
+        <p class="morfeu-version-subtitle"></p>
+        <p class="morfeu-tagline">Transformando sonhos em impérios.</p>
       </div>
     </div>
-
     <header class="navbar">
       <div class="container">
         <a href="index.html" class="logo"><span>Morfeu</span></a>
@@ -71,7 +74,6 @@
         <a href="planos.html" class="cta-button">Ver Planos</a>
       </div>
     </header>
-
     <main>
       <section class="hero-section">
         <div class="container">
@@ -87,7 +89,6 @@
           >
         </div>
       </section>
-
       <section class="team-section">
         <div class="container">
           <h2 class="section-title">Nossas Equipes, Seus Pilares</h2>
@@ -98,8 +99,8 @@
           <div class="team-grid">
             <div
               class="team-card"
-              data-title="ATENA"
-              data-description="A ATENA é sua linha de frente na jornada empreendedora. Esta equipe é especialista em transformar ideias brutas em modelos de negócio sólidos."
+              data-title="ATENA – Análise Tática e Estratégica para Novos Ativos"
+              data-description="A ATENA é sua linha de frente na jornada empreendedora. Esta equipe é especialista em transformar ideias brutas em modelos de negócio sólidos. Eles conduzem a análise de mercado, definem seu público-alvo, estruturam seu plano de negócios e cuidam de toda a burocracia para a formalização do seu CNPJ. Com a ATENA, sua base será inabalável."
             >
               <div class="team-card-header">
                 <h3>ATENA</h3>
@@ -109,8 +110,8 @@
             </div>
             <div
               class="team-card"
-              data-title="ARES"
-              data-description="Com o negócio formalizado, é hora de conquistar o mercado. A equipe ARES entra em campo para construir uma marca forte e memorável."
+              data-title="ARES – Amplificação e Ressoância Estratégica de Sinergias"
+              data-description="Com o negócio formalizado, é hora de conquistar o mercado. A equipe ARES entra em campo para construir uma marca forte e memorável. Eles desenvolvem sua identidade visual, criam estratégias de marketing digital, gerenciam suas redes sociais e otimizam suas vendas. ARES é a força que impulsiona seu crescimento e visibilidade."
             >
               <div class="team-card-header">
                 <h3>ARES</h3>
@@ -120,8 +121,8 @@
             </div>
             <div
               class="team-card"
-              data-title="AURORA"
-              data-description="A AURORA é a guardiã da saúde financeira do seu negócio. Esta equipe de consultores financeiros oferece análise de fluxo de caixa, planejamento orçamentário e muito mais."
+              data-title="AURORA – Análise Unificada de Recursos, Orçamento, Receita e Administração"
+              data-description="A AURORA é a guardiã da saúde financeira do seu negócio. Esta equipe de consultores financeiros oferece análise de fluxo de caixa, planejamento orçamentário, estratégias de precificação e suporte na gestão administrativa. Com a AURORA, você terá a clareza e a confiança necessárias para tomar as melhores decisões financeiras."
             >
               <div class="team-card-header">
                 <h3>AURORA</h3>
@@ -132,8 +133,49 @@
           </div>
         </div>
       </section>
-    </main>
+      </div>
+      </section>
+      <section class="journey-section">
+        <div class="container">
+          <h2 class="section-title">Sua Jornada Simplificada</h2>
+          <p class="section-subtitle">
+            Transformamos a complexidade de empreender em um caminho claro,
+            tecnológico e humano.
+          </p>
+          <div class="journey-grid">
+            <div class="journey-step">
+              <div class="step-icon">01</div>
+              <h3 class="step-title">Diagnóstico</h3>
+              <p class="step-description">
+                Tudo começa com você. Nosso diagnóstico gratuito entende sua
+                ideia, seus objetivos e seu perfil para traçar o melhor plano.
+              </p>
+            </div>
+            <div class="journey-step">
+              <div class="step-icon">02</div>
+              <h3 class="step-title">Estruturação</h3>
+              <p class="step-description">
+                Cuidamos de toda a burocracia e estratégia inicial: CNPJ,
+                plano de negócios e construção da sua marca com as equipes ATENA
+                e ARES.
+              </p>
+            </div>
+            <div class="journey-step">
+              <div class="step-icon">03</div>
+              <h3 class="step-title">Crescimento</h3>
+              <p class="step-description">
+                Com a base sólida, focamos na escala. Gestão financeira com a
+                AURORA, acesso ao Ecossistema e suporte contínuo para seu
+                império prosperar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      </main>
+    ```
 
+    </main>
     <div class="modal-backdrop">
       <div class="modal">
         <button class="modal-close-btn">&times;</button>

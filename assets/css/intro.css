@@ -1,5 +1,5 @@
 /* ========================================= */
-/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA v2.0*/
+/* ESTILOS DA INTRODUÇÃO CINEMATOGRÁFICA v4.6*/
 /* ========================================= */
 
 #intro-sequence {
@@ -8,29 +8,34 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000;
   z-index: 9999;
-  display: flex; /* Começa visível para mostrar o botão */
-  justify-content: center;
-  align-items: center;
   font-family: "Inter", sans-serif;
   color: #ededed;
   overflow: hidden;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+  perspective: 1200px;
+  background-color: #000;
 }
 
-/* --- PORTAL DE ENTRADA (BOTÃO) --- */
+/* --- PORTAL DE ENTRADA --- */
 #intro-gate {
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-color: #000;
 }
 
 #start-sequence-btn {
   background-color: transparent;
-  border: 2px solid #00e0e0;
-  color: #00e0e0;
+  border: 2px solid rgba(220, 180, 241, 0.8);
+  color: rgba(220, 180, 241, 0.8);
   font-size: 1.2rem;
   font-weight: 500;
   padding: 1rem 2.5rem;
@@ -38,27 +43,13 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   transition: all 0.3s ease;
-  text-shadow: 0 0 5px #00e0e0;
+  text-shadow: 0 0 10px rgba(220, 180, 241, 0.5);
 }
 
 #start-sequence-btn:hover {
-  background-color: #00e0e0;
+  background-color: rgba(220, 180, 241, 0.8);
   color: #000;
-  box-shadow: 0 0 20px #00e0e0;
-}
-
-/* --- FUNDO GRÁFICO --- */
-#intro-grid-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(rgba(0, 224, 224, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 224, 224, 0.1) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0;
-  transition: opacity 1s ease;
+  box-shadow: 0 0 25px rgba(220, 180, 241, 0.8);
 }
 
 /* --- ELEMENTOS GERAIS DA SEQUÊNCIA --- */
@@ -72,111 +63,272 @@
   flex-direction: column;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 1.2s ease-in-out;
+  transform-style: preserve-3d;
 }
 
-/* --- FASE 1: MANTRA --- */
-.mantra-logo-container {
-  text-align: center;
+/* === NOVO: SANTUÁRIO ETÉREO (VFX de Fundo) === */
+#mantra-sequence {
+  background: #010002;
 }
 
-.mantra-logo {
-  display: flex;
-  align-items: flex-end;
-  width: 150px;
-  height: 100px;
-  color: #00e0e0;
-  filter: drop-shadow(0 0 3px #00e0e0) drop-shadow(0 0 10px #00e0e0);
-}
-
-/* Recriação do 'M' Geométrico */
-.mantra-m-left,
-.mantra-m-right {
-  width: 33.3%;
-  height: 100%;
-  background-color: currentColor;
-  clip-path: polygon(0 0, 100% 100%, 100% 100%, 30% 100%, 0 70%);
-}
-.mantra-m-right {
-  transform: scaleX(-1);
-}
-.mantra-m-center {
-  width: 33.3%;
-  height: 50%;
-  background-color: currentColor;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.mantra-subtitle {
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: 0.5rem;
-  color: #00e0e0;
-  text-shadow: 0 0 5px #00e0e0;
-  margin-top: 15px;
-}
-
-.glitch-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 3px;
-  z-index: 1;
-  animation: glitch-scanline 8s linear infinite;
-}
-
-.mantra-logo-container.glitching {
-  animation: glitch-flicker 3s infinite;
-}
-
-.mantra-logo-container.glitching::before,
-.mantra-logo-container.glitching::after {
-  content: ""; /* Conteúdo vazio, apenas para o efeito visual */
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: #000;
-  overflow: hidden;
-  z-index: 3;
-}
-
-.mantra-logo-container.glitching::before {
-  animation: glitch-anim-1 2s infinite linear alternate-reverse;
-}
-.mantra-logo-container.glitching::after {
-  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
-}
-
-/* --- FASE 2: MORFEU --- */
-.morfeu-logo {
-  font-size: 6rem;
-  font-weight: 600;
-  letter-spacing: 2px;
+#mantra-sanctuary-container {
+  position: relative;
+  display: grid;
+  place-items: center;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 0.5s 0.5s;
+}
+#mantra-sequence.visible #mantra-sanctuary-container {
+  opacity: 1;
+}
+
+/* Camada de fundo para todos os VFX */
+.vfx-background-layer {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 500px;
+  height: 500px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Imagem principal, na camada superior */
+#mantra-logo-final {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 320px;
+  height: auto;
+  z-index: 10;
+  opacity: 0;
+  filter: grayscale(100%) brightness(0.5) blur(8px);
+  animation: infuse-image 2s ease-out 1.5s forwards;
+}
+
+/* 1. Efeito da Borda de Energia */
+.animated-gradient-border {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 380px;
+  height: 380px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0;
+  animation: border-fade-in 2s ease-out 0.5s forwards;
+}
+.animated-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(#a855f7, #6d28d9, #d946ef, #a855f7);
+  animation: rotate 8s linear infinite;
+  filter: blur(5px);
+}
+.animated-gradient-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #010002;
+}
+
+/* 2. Efeito de Fogo Etéreo Roxo */
+.fire-vfx-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 50%;
+  transform: translateX(-50%);
+  filter: contrast(1.5); /* Torna o efeito mais vibrante */
+}
+
+/* Gera 10 "chamas" via pseudo-elementos */
+.fire-vfx-container::before,
+.fire-vfx-container::after {
+  content: "";
+}
+.fire-vfx-container::before,
+.fire-vfx-container::after,
+.fire-vfx-container > div::before,
+.fire-vfx-container > div::after {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #c084fc 10%,
+    #6d28d9 60%,
+    transparent 80%
+  );
+  filter: blur(15px);
+  animation: fire-wisp 10s linear infinite;
+}
+
+/* Distribuição e delays das chamas */
+.fire-vfx-container::before {
+  left: 10%;
+  animation-delay: -1s;
+}
+.fire-vfx-container::after {
+  left: 20%;
+  animation-delay: -2s;
+}
+.fire-vfx-container > div:nth-of-type(1)::before {
+  left: 30%;
+  animation-delay: -3s;
+}
+.fire-vfx-container > div:nth-of-type(1)::after {
+  left: 40%;
+  animation-delay: -4s;
+}
+.fire-vfx-container > div:nth-of-type(2)::before {
+  left: 50%;
+  animation-delay: -5s;
+}
+.fire-vfx-container > div:nth-of-type(2)::after {
+  left: 60%;
+  animation-delay: -6s;
+}
+.fire-vfx-container > div:nth-of-type(3)::before {
+  left: 70%;
+  animation-delay: -7s;
+}
+.fire-vfx-container > div:nth-of-type(3)::after {
+  left: 80%;
+  animation-delay: -8s;
+}
+.fire-vfx-container > div:nth-of-type(4)::before {
+  left: 90%;
+  animation-delay: -9s;
+}
+.fire-vfx-container > div:nth-of-type(4)::after {
+  left: 100%;
+  animation-delay: -10s;
+}
+
+/* 3. Efeito de Partículas Flutuantes */
+.particle-vfx-container {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      #fff 1px,
+      transparent 1px
+    ),
+    radial-gradient(circle at 80% 30%, #fff 1px, transparent 1px),
+    radial-gradient(circle at 50% 70%, #fff 2px, transparent 2px),
+    radial-gradient(circle at 25% 85%, #fff 1px, transparent 1px),
+    radial-gradient(circle at 70% 90%, #fff 2px, transparent 2px);
+  background-size: 100% 100%;
+  opacity: 0.3;
+  animation: particle-float 20s linear infinite;
+}
+
+/* === KEYFRAMES PARA O SANTUÁRIO ETÉREO === */
+@keyframes infuse-image {
+  from {
+    opacity: 0;
+    filter: grayscale(100%) brightness(0.5) blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: grayscale(0%) brightness(1) blur(0)
+      drop-shadow(0 0 20px rgba(220, 180, 241, 0.5));
+  }
+}
+@keyframes border-fade-in {
+  to {
+    opacity: 0.5;
+  }
+}
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fire-wisp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200px) scale(0.5);
+    opacity: 0;
+  }
+}
+@keyframes particle-float {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -200px;
+  }
+}
+
+/* --- FASE 2: MORFEU (sem alterações nesta versão) --- */
+#morfeu-sequence {
+  background: radial-gradient(
+    circle at center,
+    #1a1a1a 0%,
+    #0a0a0a 50%,
+    #000000 100%
+  );
+}
+
+.morfeu-logo {
+  display: flex;
+  font-size: 7rem;
+  font-weight: 600;
+  transform-style: preserve-3d;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  animation: morfeu-float 8s ease-in-out infinite alternate;
+}
+
+.morfeu-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateZ(-400px) rotateY(100deg) rotateX(-40deg);
+  transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+  animation: batuque-pop 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards,
+    morfeu-pulse-glow 4s ease-in-out infinite alternate,
+    morfeu-shimmer 10s linear infinite;
+}
+
+.morfeu-version-subtitle {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #666;
+  margin-top: -15px;
+  opacity: 0;
+  transition: opacity 1.2s ease 0.5s;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
 }
 
 .morfeu-tagline {
   font-size: 1.2rem;
   font-weight: 400;
   color: #a0a0a0;
-  margin-top: 10px;
+  margin-top: 25px;
   letter-spacing: 1px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+  transition: opacity 1.2s ease 0.8s, transform 1.2s ease 0.8s;
 }
 
-/* Classes de controle do JS */
+/* --- Classes de controle do JS --- */
 .visible {
   opacity: 1 !important;
+  pointer-events: all !important;
 }
 .hidden {
   opacity: 0 !important;
@@ -186,61 +338,60 @@
   transform: translateY(0) !important;
 }
 
-/* Keyframes de animação */
-@keyframes glitch-scanline {
+/* --- Keyframes de animação MORFEU --- */
+@keyframes batuque-pop {
   0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-@keyframes glitch-flicker {
-  0%,
-  100% {
-    opacity: 1;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.9;
-  }
-}
-@keyframes glitch-anim-1 {
-  0% {
-    clip: rect(42px, 9999px, 44px, 0);
-  }
-  20% {
-    clip: rect(12px, 9999px, 76px, 0);
-  }
-  40% {
-    clip: rect(88px, 9999px, 99px, 0);
-  }
-  60% {
-    clip: rect(28px, 9999px, 19px, 0);
-  }
-  80% {
-    clip: rect(45px, 9999px, 98px, 0);
+    transform: scale(1.15);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
   }
   100% {
-    clip: rect(10px, 9999px, 85px, 0);
+    transform: scale(1);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
   }
 }
-@keyframes glitch-anim-2 {
-  0% {
-    clip: rect(5px, 9999px, 82px, 0);
+
+@keyframes morfeu-float {
+  from {
+    transform: translateY(0px);
   }
-  20% {
-    clip: rect(90px, 9999px, 4px, 0);
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes morfeu-pulse-glow {
+  from {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  }
+  to {
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+  }
+}
+
+@keyframes morfeu-shimmer {
+  0% {
+    color: #ccc;
   }
   40% {
-    clip: rect(33px, 9999px, 93px, 0);
+    color: #ccc;
+  }
+  50% {
+    color: #fff;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
   }
   60% {
-    clip: rect(7px, 9999px, 59px, 0);
-  }
-  80% {
-    clip: rect(40px, 9999px, 13px, 0);
+    color: #ccc;
   }
   100% {
-    clip: rect(94px, 9999px, 69px, 0);
+    color: #ccc;
   }
+}
+
+/* --- Correção do Scroll durante a Introdução --- */
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }

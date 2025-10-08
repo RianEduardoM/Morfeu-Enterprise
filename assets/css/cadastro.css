@@ -333,3 +333,18 @@ button {
     font-size: 3rem;
   }
 }
+/* --- SISTEMA DE TRANSIÇÃO DE PÁGINA UNIFICADO --- */
+body.is-entering {
+  opacity: 0;
+  transform: translateY(10px);
+}
+body {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+body.is-exiting {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+}
